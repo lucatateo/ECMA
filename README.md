@@ -21,6 +21,7 @@ Per creare una copia di tutti i file sul vostro computer (copia che potrete aggi
 Questo secondo passaggio può essere fatto agevolmente all'interno di GitHub Desktop, scegliendo la cartella di destinazione.
 
 **Differenza tra un fork e un clone**
+
 Un _fork_ è la copia di un _repository_ che ci permette di sperimentare qualsiasi cambiamento vogliamo senza modificare il progetto principale.
 Un _fork_ è diverso da un clone proprio per il fatto che esso mantiene una connessione con il progetto originario.
 
