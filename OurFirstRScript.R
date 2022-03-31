@@ -166,6 +166,7 @@ par(mfrow=c(1,1))
 # identify the outlier
 plot(x=y$footlength_mm, y=y$capture_id)
 identify(x=y$footlength_mm, y=y$capture_id)
+# press Esc to stop the identify stuff
 y[102,]
 
 y$weight_g
@@ -208,6 +209,3 @@ y$age
 y %>% group_by(age) %>% summarise(mean.w = mean(na.omit(weight_g)))
 y$sex
 y %>% group_by(age, sex) %>% summarise(mean.w = mean(na.omit(weight_g)))
-
-
-# press Esc to stop the identify stuff
