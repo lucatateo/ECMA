@@ -190,6 +190,7 @@ y[,c("chip","trap_id")] # by column name, more than a column
 
 # selecting subsets of data, according to their values
 library(dplyr)
+library(tidyverse)
 filter(y, trap_id > 43)
 # or
 y %>% filter(trap_id > 43)
@@ -200,8 +201,10 @@ arrange(y, trap_id)
 # multiple operations
 y[,c("chip","trap_id")] %>% filter(trap_id > 65) %>% arrange(trap_id)
 select(y, chip, trap_id)
-y %>% select(chip, trap_id) %>% filter(trap_id > 65) %>% arrange(trap_id)
-
+y %>% 
+  select(chip, trap_id) %>% 
+  filter(trap_id > 65) %>% 
+  arrange(trap_id)
 
 # summarizing data within groups
 names(y)
