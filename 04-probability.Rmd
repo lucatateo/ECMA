@@ -50,8 +50,12 @@ This is the basic principles of Monte Carlo Simulations - Monte Carlo Simulation
 (http://ditraglia.com/Econ103Public/Rtutorials/Rtutorial4.html#introduction)
 
 The probability of obtaining a 6 is a **marginal probability**. "The interesting thing about a marginal probability is that the term sounds complicated, but it’s actually the probability that we are most familiar with. Basically anytime you are in interested in a single event irrespective of any other event (i.e. “marginalizing the other event”), then it is a marginal probability. For instance, the probability of a coin flip giving a head is considered a marginal probability because we aren’t considering any other events." (http://tinyheero.github.io/2016/03/20/basic-prob.html)   
-E.g. what is the probability of capturing an adult snow vole?
 
+```{r}
+sample(x=c("testa","croce"), size = 5, replace = TRUE)
+```
+
+E.g. what is the probability of capturing an adult snow vole?
 
 Now we can roll two dice:
 
@@ -114,7 +118,7 @@ sum(rolls == 7)/n
 
 **Joint probability**: probability of the joint occurrence of two independent events. 
 *i.e.*, the probability of two different events occurring at the same time.
-Il two events (A and B) are **independent**, then P(A and B) = P(A) * P(B).   
+If two events (A and B) are **independent**, then P(A and B) = P(A) * P(B).   
 
 Again, we roll 2 dice.   
 How often do we get a 6 in both rolls?

@@ -1,0 +1,92 @@
+---
+title: "How to calculate confidence intervals"
+output:
+  word_document: default
+  html_notebook: default
+---
+
+Consider our snow vole case study... We will calculate the confidence intervals for the mean of the weight of the individuals, for the foot length, and for different groups. 
+
+```{r packages}
+library(Rmisc)
+library(Hmisc)
+library(ggplot2)
+library(boot)
+```
+
+```{r load-data}
+dati <- read.csv("data/captures.csv", sep=";")
+```
+
+
+# Calculating and plotting CIs with the traditional method
+
+The function `CI` in the `Rmisc` package produces confidence intervals for the mean using the traditional method:
+
+```{r}
+CI(dati$weight_g, ci=0.95)
+```
+
+So what?? How can we fix that??
+
+```{r}
+CI(na.omit(dati$weight_g), ci=0.95)
+```
+
+What about the CIs for different group of animals?
+
+```{r}
+dati2 <- na.omit(dati)
+group.CI(weight_g ~ sex,
+         data= dati2,
+         ci=0.95)
+intervalli <- group.CI(weight_g ~ sex,
+         data= dati2,
+         ci=0.95)
+intervalli
+```
+
+
+```{r}
+ggplot(intervalli, aes(x=sex, y=weight_g.mean, colour=sex)) +
+    geom_errorbar(aes(ymin=weight_g.lower, ymax=weight_g.upper), width=.1) +
+    geom_line() +
+    geom_point()
+```
+
+Do it on your own:
+
+* plot just one of the confidence intervals (for males or for females, of for the overall mean)
+* plot the confidence intervals for the mean weights, grouped for age
+* repeat for the footlength
+
+
+# Calculating and plotting CIs with the bootstrapping method
+
+We first need to apply the bootstrap to our data. For this purpose, we use the function `boot` in the `boot` package:
+
+```{r}
+boot.data <- boot(dati2$weight_g,
+                  function(x,i) mean(x[i]), 
+                  R=10000)
+```
+
+Now we can use the bootstrapped data to calculate the CIs, using the `boot.ci` function:
+
+```{r}
+boot.ci(boot.data,
+        conf = 0.95)
+```
+
+The function generates different types of non-parametric confidence intervals. For routine use, it is recommended to use the BCa or percentile methods. The formulae on which the calculations are based can be found in Chapter 5 of Davison and Hinkley (1997). Davison, A.C. and Hinkley, D.V. (1997) Bootstrap Methods and Their Application, Chapter 5. Cambridge University Press.
+
+Do it on your own:
+
+* Calculate the bootstrapped intervals for the sex groups
+* Plot the bootstrapped intervals
+
+## Optional readings:   
+
+* 'Calculating the Confidence interval for a mean using a formula' from Statistics Learning Center. (Dr. Nic). 2013. www.youtube.com/watch?v=s4SRdaTycaw
+* Davison, A.C. and Hinkley, D.V. (1997) Bootstrap Methods and Their Application, Chapter 5. Cambridge University Press.
+
