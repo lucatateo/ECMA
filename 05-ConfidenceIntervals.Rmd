@@ -61,6 +61,13 @@ Do it on your own:
 * repeat for the footlength
 
 
+```{r}
+as.data.frame(CI(na.omit(dati$weight_g), ci=0.95)) -> CImean
+CImean
+```
+
+
+
 # Calculating and plotting CIs with the bootstrapping method
 
 We first need to apply the bootstrap to our data. For this purpose, we use the function `boot` in the `boot` package:

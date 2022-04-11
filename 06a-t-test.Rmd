@@ -1,0 +1,228 @@
+---
+title: "The t-test"
+subtitle: Testing assumptions and performing t-tests
+output:
+  html_document:
+    df_print: paged
+---
+
+# One sample t-test
+
+We must met 3 assumptions:
+
+* data are continuous
+* data are normally distributed
+* data represent a random sample
+
+```{r data}
+library(dplyr)
+captures <- read.csv("data/captures.csv", sep=";")
+captures %>% 
+  filter(age=="A") -> adults
+head(adults)
+```
+
+```{r data-grouped}
+adults %>% 
+  group_by(animal_id, sex) -> grouped
+grouped %>% 
+  arrange(animal_id)
+```
+
+
+```{r data-individual-weights}
+grouped %>% 
+  summarise(count=n(), individual.weight = mean(weight_g, na.rm = TRUE)) -> ind.w
+ind.w
+```
+
+```{r, eval=FALSE}
+
+# use this code only if you could not install the dplyr package
+
+captures <- read.csv("data/captures.csv", sep=";")
+adults <- subset(captures, age=="A")
+adults
+
+aa <- tapply(adults$weight_g, adults$animal_id, mean, na.rm = TRUE)
+bb <- data.frame(aa, row.names(aa))
+colnames(bb) <- c("individual.weight","animal_id")
+bb
+
+cc <- table(adults$sex, adults$animal_id)
+dd <- as.data.frame(cc)
+ee <- subset(dd, Freq > 0)
+colnames(ee) <- c("sex","animal_id","count")
+ee
+
+ind.w <- merge(bb, ee, by="animal_id")
+```
+
+
+## Assumptions
+
+### Normality
+
+There are 5 major tests used:
+
+* Shapiro-Wilk W test
+* Anderson-Darling test
+* Martinez-Iglewicz test
+* Kolmogorov-Smirnov test
+* D'Agostino omnibus test
+
+Note: Power of all is weak if N < 10
+
+Here, we will use the Shapiro-Wilk W test. It is the ratio of two estimates of variance but we can understand it more easily using a graphical representation, the Q-Q plot.   
+
+```{r qqplot}
+
+#?qqplot
+qqnorm(ind.w$individual.weight); qqline(ind.w$individual.weight, col="red")
+
+```
+
+#### The Q-Q plot
+
+The quantile-quantile (q-q) plot is a graphical technique for determining if two data sets come from populations with a common distribution.   
+A q-q plot is a plot of the quantiles of the first data set against the quantiles of the second data set. By a **quantile**, we mean the **fraction (or percent) of points below the given value**. That is, the 0.3 (or 30%) quantile is the point at which 30% percent of the data fall below and 70% fall above that value.   
+**A 45-degree reference line is also plotted**. If the two sets come from a population with the same distribution, the points should fall approximately along this reference line. The greater the departure from this reference line, the greater the evidence for the conclusion that the two data sets have come from populations with different distributions.   
+The q-q plot is formed by:
+
+* Vertical axis: Estimated quantiles from data set 1
+* Horizontal axis: Estimated quantiles from data set 2 (in this case the normal distribution)
+
+Both *axes are in units of their respective data sets*. That is, the actual quantile level is not plotted. For a given point on the q-q plot, we know that the quantile level is the same for both points, but not what that quantile level actually is.   
+If the data sets have the same size, the q-q plot is essentially a *plot of sorted data set 1 against sorted data set 2*. If the data sets are not of equal size, the quantiles are usually picked to correspond to the sorted values from the smaller data set and then the quantiles for the larger data set are interpolated.
+
+
+#### The W statistics
+
+The W statistic calculated by the Shapiro-Wilk test measures the straightness of the quantile-quantile plot. That is, W can be interpreted as the squared value of the correlation coefficient of the Q-Q plot.
+
+W ranges from 0 to 1.    
+The closer W is to 1, the more normal the sample is.
+These are the results of the Shapiro-Wilk normality test:
+
+```{r shapirotest}
+
+shapiro.test(ind.w$individual.weight)
+
+```
+
+#### t.test
+
+Test the hypothesis that the individual weights are significantly different from 30 g:
+
+
+```{r t-test-onesample}
+t.test(ind.w$individual.weight, mu = 30)
+```
+
+
+```{r gdl}
+length(na.omit(ind.w$individual.weight))
+```
+
+
+
+# Two-sample t-test
+
+We must met 5 assumptions:
+
+* data are continuous
+* data are normally distributed
+* both samples are simple random samples from their respective
+populations
+* the variances of the two popolations are equal
+* the two samples are independent
+
+
+```{r data-twosamples}
+## is the weight of females greater than the weight of males?
+
+# we use again the summarise dplyr function
+ind.w %>% 
+  group_by(sex) %>% 
+  summarise(count=n(), class.weight = mean(individual.weight, na.rm = TRUE))
+
+# again, if you could not install dplyr, use the following code
+# tapply(ind.w$individual.weight, ind.w$sex, mean, na.rm = TRUE)
+
+# We can see the difference in weight that we observe between males and females
+w.f <- (subset(ind.w, sex=="F"))$individual.weight
+w.m <- (subset(ind.w, sex=="M"))$individual.weight
+```
+
+
+## Assumptions
+
+### Normality
+
+We test for the normality of each sample:
+
+```{r normality-twosamples}
+
+par(mfrow=c(1,2))
+qqnorm(w.f); qqline(w.f, col="red")
+qqnorm(w.m); qqline(w.m, col="red")
+shapiro.test(w.f)
+shapiro.test(w.m)
+
+```
+
+
+### Homogeneity of variances
+
+Determination of which two-sample t-test to use is dependent upon first testing the variance assumption (homogeneous or heterogeneous). This requires the use of a F-test which relies on the F-distribution.
+
+#### The F-test
+
+Any F-test can be regarded as a **comparison of two variances**. For application, please be aware that the test is so sensitive to the assumption of normality that it would be inadvisable to use it as a routine test for the equality of variances. This is a case where "approximate normality" (which in similar contexts would often be justified using the central limit theorem), is not good enough to make the test procedure approximately valid to an acceptable degree.   
+The test statistic is:
+$$ F = s^2_x/s^2_y $$
+It has an F-distribution with n − 1 and m − 1 degrees of freedom.
+
+```{r Fdistributions-plot}
+x <- rnorm(100,0,1)
+curve(df(x, df1=1, df2=1), from=0, to=5, lty=1, ylim=c(0,2))
+curve(df(x, df1=2, df2=1), from=0, to=5, lty=2, add=T)
+curve(df(x, df1=5, df2=2), from=0, to=5, lty=3, add=T)
+curve(df(x, df1=100, df2=1), from=0, to=5, lty=4, add=T)
+curve(df(x, df1=100, df2=100), from=0, to=5, lty=5, add=T)
+```
+
+
+```{r vartest}
+
+var(w.f, na.rm = T)
+var(w.m, na.rm = T)
+var.test(w.f,w.m)
+var(w.f, na.rm = T)/var(w.m, na.rm = T)
+
+boxplot(ind.w$individual.weight ~ ind.w$sex)
+
+```
+
+#### t.test
+
+```{r t-test-twosamples}
+# ?t.test
+t.test(w.f, w.m,
+       var.equal = TRUE,
+       paired = FALSE, 
+       alternative = "two.sided")
+```
+
+![Rejection regions for a two-tailed test](https://www.gironi.it/blog/wp-content/uploads/2018/11/due-code.gif)
+
+![Rejection region for a one-tailed test](https://www.gironi.it/blog/wp-content/uploads/2018/11/una-coda.gif)
+
+
+
+
+# Dependent t-test
+
+For this topic, I recommend this course: https://www.datacamp.com/courses/student-s-t-test
+
+
