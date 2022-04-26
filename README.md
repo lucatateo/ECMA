@@ -23,8 +23,7 @@ Questo secondo passaggio può essere fatto agevolmente all'interno di GitHub Des
 **Differenza tra un fork e un clone**
 
 Un _fork_ è la copia di un _repository_ che ci permette di sperimentare qualsiasi cambiamento vogliamo senza modificare il progetto principale.
-Un _fork_ è diverso da un clone proprio per il fatto che esso mantiene una connessione con il progetto originario.
 
-Un clone è anch’esso la copia completa di un _repository_, ma esso è una copia “staccata”, non permette di integrare le modifiche nel repository principale, tranne in alcuni casi nei quali ad esempio saremo invitati. Un clone è l’operazione più diffusa quando vogliamo utilizzare “il contenuto” (inteso come l’app, lo script, etc.) di un _repository_ al quale non vogliamo contribuire.
+Un clone è anch’esso la copia completa di un _repository_, ma esso è una copia “staccata”. Un clone è l’operazione più diffusa quando vogliamo utilizzare “il contenuto” (inteso come l’app, lo script, etc.) di un _repository_ in locale.
 
 
