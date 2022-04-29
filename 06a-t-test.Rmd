@@ -132,14 +132,13 @@ We must met 5 assumptions:
 
 * data are continuous
 * data are normally distributed
-* both samples are simple random samples from their respective
-populations
-* the variances of the two popolations are equal
+* both samples are simple random samples from their respective populations
+* the variances of the two populations are equal
 * the two samples are independent
 
 
 ```{r data-twosamples}
-## is the weight of females greater than the weight of males?
+## is the weight of females and males different?
 
 # we use again the summarise dplyr function
 ind.w %>% 
@@ -211,7 +210,7 @@ boxplot(ind.w$individual.weight ~ ind.w$sex)
 t.test(w.f, w.m,
        var.equal = TRUE,
        paired = FALSE, 
-       alternative = "two.sided")
+       alternative = "two.sided") # greater/less
 ```
 
 ![Rejection regions for a two-tailed test](https://www.gironi.it/blog/wp-content/uploads/2018/11/due-code.gif)
