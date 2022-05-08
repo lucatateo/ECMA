@@ -1,0 +1,29 @@
+---
+title: "Simple Linear Regression - exercise"
+output: html_notebook
+---
+
+The following data comes from an experiment on caterpillars. The caterpillars were fed on experimental diets differing in their tannin content, and their growth was then measured:
+
+```{r}
+growth = c(12, 10, 8, 11, 6, 7, 2, 3.5, 3.5)
+tannin = 0:8
+```
+
+We hypothesize that the higher the percentage of tannin in the diet, the more slowly the caterpillars grow.   
+Test this hypothesis through a regression analysis.
+
+```{r}
+
+```
+
+
+A previous experiment, however, produced different results. In particular, the slope of the regression coefficient was -1.5. We can do a test to see if the slope we just estimated (-1.158) is statistically different from 1.5. In this case the null hypothesis is that the slope is -1.5, vs. the alternative hypothesis that the slope is more than -1.5.
+
+```{r}
+
+```
+
+
+
+
