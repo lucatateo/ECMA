@@ -1,0 +1,130 @@
+---
+title: "Testing the assumptions of SLR and introducing new variables"
+output: 
+  html_document: 
+    theme: paper
+    toc: yes
+    toc_float: yes
+  html_notebook: 
+    toc: yes
+    toc_float: yes
+---
+
+
+# SLR: testing the assumptions
+
+We are going to test the assumptions for the regression analysis carried out on the dataset *cars*. We already know that we can extract the coefficients from the object containing the results of the regression analysis:   
+
+```{r SLRcoefs}
+
+data(cars)
+cars.lm <- lm(dist ~ speed, data = cars)
+coef(cars.lm)
+names(cars.lm)
+
+```
+
+We can do the same for the residuals, and we can plot them:
+
+```{r SLRresiduals}
+
+residuals(cars.lm)
+par(mfrow=c(1,3))
+hist(residuals(cars.lm))
+boxplot(residuals(cars.lm))
+qqnorm(residuals(cars.lm))
+qqline(residuals(cars.lm))
+par(mfrow=c(1,1))
+
+```
+
+In general, to test for problems with the model residuals, we can simply plot the results of the regression analysis:
+
+```{r plotSLR}
+
+plot(cars.lm)
+
+```
+
+
+## Independence assumption
+
+One of the strongest regression assumptions is the one regarding independence. Departures from the independence assumption are often exhibited by correlation (or autocorrelation) present in the residuals. There can be positive or negative correlation.   
+To check this assumption, we use the first plot and we watch out for any patterns or structure: the points should be randomly scattered on the plot.   
+We can also do a test for this:
+
+```{r durbinwatson}
+
+# install.packages("lmtest")
+library(lmtest)
+dwtest(cars.lm, alternative = "two.sided")
+
+```
+
+In this case, we do not reject the null hypothesis. There is very little evidence of nonzero autocorrelation in the residuals.
+
+
+
+## Normality assumption
+
+
+We can identify poins that do not fall on the qqline:
+
+```{r identifypoints}
+
+cars[23,]
+dim(cars)
+cars[-23,]
+dim(cars[-23,])
+
+```
+
+Of course, the normality of the residuals can be checked with a Shapiro test:
+
+```{r shapiroresiduals}
+
+shapiro.test(residuals(cars.lm))
+
+```
+
+For this data, we would reject the assumption of normality of the residuals - but the regression model is reasonably robust to departures from the normality assumptions. As long as the residual distribution is not highly skewed, the regression estimators will perform reasonably well.
+
+
+## Constant variance assumption
+
+To check for the variance of the residuals, we use the scale-location plot. In this plot, we should watch out for any fanning out (or in) of the dots. Hopefully, they fall in a constant band.   
+We can also perform a test, which is called the studentized Breusch-Pagan test:
+
+```{r constantvariance}
+
+library(lmtest)
+bptest(cars.lm)
+
+```
+
+
+
+## BoxCox transformation
+
+```{r boxcox}
+
+data("trees")
+head(trees)
+
+hist(trees$Volume)
+hist(trees$Volume^2)
+
+library(MASS)
+?boxcox
+bctrans <- boxcox(Volume ~ Height + Girth, data = trees)
+bctrans <- boxcox(Volume ~ Height + Girth, data = trees,
+                  lambda = seq(0, 0.5, length = 10))
+bctrans
+which(bctrans$y==max(bctrans$y))
+bctrans$x[62]
+hist(trees$Volume)
+hist(trees$Volume^0.31)
+
+```
+
+
