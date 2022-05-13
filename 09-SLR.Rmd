@@ -164,18 +164,18 @@ The use of an adjusted R2 is an attempt to take account of the phenomenon of the
 
 # The heart rate example
 
-The maximum heart rate of a person if often said to be related to age by the equation: Max = 220 - Age. The expected value for a regression coefficient of age hearth rate (max) and age is 1.
+The maximum heart rate of a person if often said to be related to age by the equation: Max = 220 - 1*Age. The expected value for a regression coefficient of age hearth rate (max) and age is 1.
 Let's check if the data support this statement. (Try to formulate the null and alternative hypothesis first!)
 
 ```{r heartratedata}
 
 x = c(18, 23, 25, 35, 65, 54, 34, 56, 72, 19, 23, 42, 18, 39, 37)
 y = c(202, 186, 187, 180, 156, 169, 174, 172, 153, 199, 193, 174, 198, 183, 178)
-plot(x,y) # make a plot
-abline(lm(y ~ x)) # plot the regression line
 lm(y ~ x) # the basic values of the regression analysis
 lm.result = lm(y ~ x)
 summary(lm.result)
+plot(x,y, xlim=c(0,80), ylim=c(150,240)) # make a plot
+abline(coef(lm.result)) #lm(y ~ x)) # plot the regression line
 
 # to see only some parts of the result
 coef(lm.result)
@@ -195,6 +195,7 @@ We can do a test to see if the slope of -1 is correct. In this case the null hyp
 b1 = -0.79773
 SE = 0.06996
 t = (b1-(-1))/SE # (obs. value - hyp.value)/SE
+t
 pt(t, 13, lower.tail = FALSE) # FIND THE RIGHT TAIL FOR THIS VALUE OF t AND 15-2 df
 # multiply by 2 for a two-sided test
 pt(t, 13, lower.tail = FALSE)*2 # < 0.05, REJECT H0: it is unlikely that for this data 

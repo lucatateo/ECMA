@@ -125,6 +125,14 @@ bctrans$x[62]
 hist(trees$Volume)
 hist(trees$Volume^0.31)
 
+max(bctrans$y)
+
+library(dplyr)
+risultati.bc <- data.frame(bctrans$y, bctrans$x)
+head(risultati.bc)
+
+arrange(risultati.bc, bctrans.y)
+
 ```
 
 
