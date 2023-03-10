@@ -1,6 +1,6 @@
 library(tidyverse)
 
-y <- read.csv("export.csv",sep=";")
+y <- read.csv("data/export.csv",sep=";")
 y <- export
 y$Species[is.na(y$Species)] <- "NAS"
 y <- y[1:88,]
