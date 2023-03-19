@@ -1,0 +1,159 @@
+---
+title: "ECMA - Exercises on data import and variable types"
+output: html_notebook
+---
+
+These exercises are from [DataCamp](https://www.datacamp.com/home).
+
+# Import CSV file
+
+The *utils* package, which is automatically loaded in your R session on startup, can import CSV files with the *read.csv()* function.   
+
+In this exercise, you'll be working with *swimming_pools.csv*; it contains data on swimming pools in Brisbane, Australia (Source: data.gov.au). The file contains the column names in the first row. It uses a comma to separate values within rows.
+
+Type *dir()* in the console to list the files in your working directory. You'll see that it contains a subdirectory called *data*. Type *dir("data")* and you'll see that it contains *swimming_pools.csv*.
+
+## Instructions
+
+* Use *read.csv()* to import *"swimming_pools.csv"* as a data frame with the name pools.
+* Print the structure of pools using *str()*.
+
+
+```{r}
+
+```
+
+# Variable types
+
+With *stringsAsFactors*, you can tell R whether it should convert strings in the flat file to factors.
+
+For all importing functions in the utils package, this argument is TRUE, which means that you import strings as factors. This only makes sense if the strings you import represent **categorical variables** in R. If you set *stringsAsFactors* to FALSE, the data frame columns corresponding to strings in your text file will be character.
+
+You'll again be working with the *swimming_pools.csv* file. It contains two columns (Name and Address), which shouldn't be factors.
+
+## Instructions
+
+* Use *read.csv()* to import the data in *"swimming_pools.csv"* as a data frame called pools; make sure that strings are imported as characters, not as factors.
+* Using *str()*, display the structure of the dataset and check that you indeed get character vectors instead of factors.
+
+```{r}
+# Import swimming_pools.csv correctly: pools
+
+# Check the structure of pools
+
+```
+
+
+## Quiz
+
+Consider the code below that loads data in *swimming_pools.csv* in two distinct ways:
+
+```{r}
+# Option A
+pools <- read.csv("swimming_pools.csv", stringsAsFactors = TRUE)
+
+# Option B
+pools <- read.csv("swimming_pools.csv", stringsAsFactors = FALSE)
+```
+
+How many variables in the resulting *pools* data frame have different types if you specify the *stringsAsFactors* argument differently?
+
+
+## Factors
+
+Lily and Tom are having an argument because they want to share a hot dog but they can’t seem to agree on which one to choose. After some time, they simply decide that they will have one each. Lily wants to have the one with the fewest calories while Tom wants to have the one with the most sodium.
+
+First, read the file *hotdogs.csv* which contains the data. In this file, the columns are not separated by commas, but by tabulations. Type *?read.csv* to discover how to specify this!
+
+```{r}
+
+
+```
+
+Next to calories and sodium, the hotdogs have one more variable: type. This can be one of three things: Beef, Meat or Poultry. As the type is not a unique string for each hotdog, it can be imported as a **factor**.
+
+The code that selects the observation with the lowest calorie count and stores it in the variable lily is already available. It uses the function *which.min()*, that returns the index the smallest value in a vector.
+
+```{r}
+# Select the hot dog with the least calories: lily
+lily <- hotdogs[which.min(hotdogs$calories), ]
+
+
+```
+
+Do a similar thing for Tom: select the observation with the most sodium and store it in tom. Use *which.max()* this time.
+
+```{r}
+# Select the observation with the most sodium: tom
+
+```
+
+
+Finally, print both the observations lily and tom:
+
+```{r}
+
+```
+
+
+# Column classes
+
+You can also specify the column types or column classes of the resulting data frame. You can do this by setting the *colClasses* argument to a vector of strings representing classes:
+
+```{r eval=FALSE}
+read.delim("my_file.txt", 
+           colClasses = c("character",
+                          "numeric",
+                          "logical"))
+```
+
+This approach can be useful if you have some columns that should be **factors** and others that should be characters. You don't have to bother with *stringsAsFactors* anymore; just state for each column what the class should be.
+
+If a column is set to "NULL" in the *colClasses* vector, this column will be skipped and will not be loaded into the data frame.
+
+## Instructions
+
+First, display the structure of hotdogs. Then, assign the correct vector to the *colClasses* argument, creating an object *hotdogs2*. *NA* should be replaced with a character vector: *c("factor", "NULL", "numeric")*.
+Display the structure of *hotdogs2* and look for the difference.
+
+```{r}
+
+```
+
+
+# Do it on your own!
+
+Now, let's practice with our *capture.csv* dataset!   
+Try to import it againg, and think carefully about variables in it, decide to keep/skip some of them, and for those you want to keep, correctly specify the *colClasses*.   
+In order to decide about which variables to include in the dataset, keep in mind that for the moment we simply want do describe the features of the animals.
+
+# Tips -  Loading data
+
+How can we import data in R? 
+Simply, we can input data directly in R...   
+
+```{r}
+# We can write them directly in R
+y <- c(1,2,3,4,5,6,7,8,9)
+# or we can use the scan function
+y <- scan(n=9)
+# or we can invent them
+y <- rnorm(100,50,10)
+```
+
+Directly writing data in R is not always a good idea... especially whan we have a huge amount of data.    
+Most of the times, we have data in Excel or csv files, so we can import them:
+
+```{r}
+# We can import them from .csv file
+y <- read.csv("data/captures.csv",sep=";")
+head(y)
+
+# or from an excel file:
+library(xlsx)
+# read in the worksheet named mysheet
+mydata <- read.xlsx("data/database_esercizio.xls", sheetName = "captures")
+head(mydata)
+```
+
+This is how I recommend to import data in R, but also look at the slides for an even easier way!

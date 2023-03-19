@@ -1,0 +1,333 @@
+---
+title: "Getting a feel for and manage your data"
+output: html_notebook
+---
+
+In this exercise, we first learn how to get a feel of our data, by looking at the structure of datasets, and then we’re going to focus on how to use the `dplyr` package, exploring functions for data management and transformation. 
+These exercises are (partly) from [DataCamp](https://www.datacamp.com/home) and partly inspired by [R for Data Science](https://r4ds.had.co.nz/transform.html).
+
+# Have a look at the structure of your data
+
+The first thing to do when you get your hands on a new dataset is to **understand its structure**. There are several ways to go about this in R, each of which may reveal different issues with your data that require attention.
+
+In this course, we are only concerned with data that can be expressed in table format (i.e. two dimensions, rows and columns). Tables in R often have the type data.frame. You can check the class of any object in R with the *class()* function.
+
+Once you know that you are dealing with tabular data, you may also want to get a quick feel for the contents of your data. Before printing the entire dataset to the console, it's probably worth knowing how many rows and columns there are. The *dim()* command tells you this.
+
+## Instructions
+
+I provided you a dataset called *captures.csv*. The data provide information on snow vole captures
+
+* Check the class of captures
+* Find the dimensions of captures
+* Print the captures column names
+
+```{r}
+# Read captures.csv (name it 'captures')
+
+
+# Check the class of captures
+?class
+
+# Check the dimensions of captures
+?dim()
+
+# View the column names of captures
+?names()
+
+```
+
+
+# Viewing the structure of your data
+
+Since *captures* doesn't have a huge number of columns, you can view a quick snapshot of your data using the *str()* (for structure) command. In addition to the class and dimensions of your entire dataset, *str()* will tell you the class of each variable and give you a preview of its contents.
+
+You can use the *summary()* command to get a better feel for how your data are distributed, which may reveal unusual or extreme values, unexpected missing data, etc. For numeric variables, this means looking at means, quartiles (including the median), and extreme values. For character or factor variables, you may be curious about the number of times each value appears in the data (i.e. counts), which *summary()* also reveals.
+
+## Instructions
+
+* View the structure of *captures* using the traditional method
+* Look at a *summary()* of *captures*
+
+
+```{r}
+# Check the structure of captures
+
+
+# View a summary of captures
+
+
+```
+
+
+# Looking at your data
+
+You can look at all the summaries you want, but at the end of the day, there is no substitute for looking at your data -- either in raw table form or by plotting it.
+
+The most basic way to look at your data in R is by printing it to the console. As you may know from experience, the *print()* command is not even necessary; you can just type the name of the object. The downside to this option is that R will attempt to print the entire dataset, which can be a nuisance if the dataset is too large.
+
+One way around this is to use the *head()* and *tail()* commands, which only display the first and last 6 rows of data, respectively. You can view more (or fewer) rows by providing as a second argument to the function the number of rows you wish to view. These functions provide a useful method for quickly getting a sense of your data without overly cluttering the console.
+
+Finally, one of the best ways to understand data is to plot them.
+For the moment, we will use the functions *hist()* and *plot()* to produce an histogram of one variable in the dataset, and to plot one variable against another, respectively.
+
+## Instructions
+
+* Print the full dataset to the console (you don't need *print()* to do this)
+* View the first 6 rows of captures
+* View the first 15 rows of captures
+* View the last 6 rows of captures
+* View the last 10 rows of captures
+* Produce an histogram of the weight of the animals (*weight_g*)
+* Plot *capture_id* (an identification number for the capture events) against the day of the year (*DOY*)
+
+
+```{r}
+# Print captures to the console
+
+
+# View the first 6 rows
+
+
+# View the first 15 rows
+
+
+# View the last 6 rows
+
+
+# View the last 10 rows
+
+
+# Produce an histogram of weight
+
+
+# Plot the capture ID no. towards the DOY
+
+
+
+```
+
+
+# Data manipulation - the four fundamental verbs
+
+Data manipulation includes variable-by-variable transformation (e.g. log, or sqrt), as well as aggregation, filtering and reordering.
+
+For data manipulation, we can use function from the *base* package, but here we rather focus on the functions from the additional *dplyr* package.
+
+```{r}
+# install.packages("dplyr") # run this line only if the package is not yet installed
+library(dplyr) # load the package
+```
+
+
+## Transform
+
+To transform means adding or modifying variables. These modifications can involve either a single variable (e.g. log-transformation), or multiple variables (es. computing density from weight and volume). The function `mutate()` in package `dplyr` can be used to calculate new variables and to add them at the end of your dataset.
+
+```{r}
+# Transform the weight of the animals using the function log
+log(captures$weight_g)
+
+# Divide weight by the foot length and save the new variable as wfratio
+wfratio <- captures$weight_g/captures$footlength_mm
+captures$weight_g/captures$footlength_mm -> wfratio
+
+# add the column wfratio to the captures data frame, creating a new data frame called captures.new
+captures.new <- cbind(captures, wfratio) # using R base function `cbind`
+captures %>% 
+  mutate(wfratio = weight_g/footlength_mm) -> captures.new
+head(captures.new)
+```
+
+```{r}
+# remove the data frame captures.new from the working environment
+rm(captures.new)
+
+# now add both the log of the weight and the column wfratio to the captures data frame, creating again new data frame called captures.new
+captures %>% 
+  mutate(logw = log(weight_g),
+         wfratio = weight_g/footlength_mm) -> captures.new
+head(captures.new)
+```
+
+
+```{r}
+# DO IT ON YOUR OWN - ADD ANOTHER VARIABLE TO THE DATA FRAME, E.G. YEAR + 1
+
+```
+
+
+## Filter
+
+It is often useful to subset or remove observations based on some condition.
+
+```{r}
+?filter 
+
+# filter data selecting only weights < 25
+filter(captures, weight_g == 25)
+
+# filter data selecting only weights < 25
+filter(captures, weight_g < 25)
+
+# filter data selecting only weights < 25 or > 40
+filter(captures, weight_g < 25 | weight_g > 40)
+
+# filter data selecting only weights > 40 and foot length > 18
+filter(captures, footlength_mm > 18 & weight_g > 40)
+```
+
+Do the same using the pipe operator (complete the exercise on the basis of the first example):
+
+```{r}
+# filter data selecting only weights < 25
+captures %>% 
+  filter(weight_g == 25)
+
+# filter data selecting only weights < 25
+
+
+# filter data selecting only weights < 25 or > 40
+
+
+# filter data selecting only weights > 40 and foot length > 18
+
+```
+
+
+
+```{r}
+# DO IT ON YOUR OWN - SELECT ONLY CAPTURES RECORDED AFTER DOY 210
+
+
+# SELECT ONLY CAPTURES RECORDED IN JULY
+
+```
+
+
+## Select
+
+`select()` allows you to rapidly zoom in on a useful subset using operations based on the names of the variables.
+
+```{r}
+# select columns by name
+captures %>% 
+  select(weight_g, sex, age, footlength_mm)
+
+# select all columns between weight and age
+captures %>% 
+  select(weight_g:age)
+
+# select all columns except dawn
+captures %>% 
+  select(-(dawn))
+
+# select all columns except those from animal_id to furmark
+captures %>% 
+  select(-(animal_id:furmark))
+
+# select columns from weight_g to footlenght_mm, excluding reproductive status
+captures %>% 
+  select(weight_g:footlength_mm) %>% 
+  select(-repr_status)
+
+```
+
+Please note: `filter()` and `select()` are the `dplyr` alternative to the `subset()` base function, and they are easier to use!
+
+## Aggregate and produce grouped summaries
+
+When we aggregate data, we collapse multiple values into a single value (e.g. by summing or taking means).   
+For this purpose, in `dplyr` we couple two functions, `summarise()` and `group_by`
+
+```{r}
+captures %>% 
+  group_by(sex) %>% 
+  summarise(mean(weight_g, na.rm=TRUE))
+```
+
+```{r}
+# DO IT ON YOUR OWN - CALCULATE THE MEAN TAKING INTO ACCOUNT THE AGE CLASS
+
+```
+
+What if we want to take into account both sex and age?
+
+```{r}
+captures %>%
+  group_by(age, sex) %>% 
+  summarise(mean(weight_g, na.rm=TRUE))
+```
+
+Using *dplyr* the code is easy to interpret and we can also easily add other summary statistics, e.g.:
+
+```{r}
+captures %>%
+  group_by(age, sex) %>% 
+  summarise(mw = mean(weight_g, na.rm=TRUE), mf = mean(footlength_mm, na.rm=TRUE))
+```
+
+Please note that grouping affects almost all following functions, so it is sometimes necessary to remove the grouping of a dataset to continue with the analyses. You can do that with the `ungroup()` function:
+
+```{r}
+captures %>% 
+  group_by(sex) %>% 
+  summarise(mean(weight_g, na.rm=TRUE)) -> grouped.captures
+ungroup(grouped.captures)
+
+# or:
+captures %>% 
+  group_by(sex) %>% 
+  summarise(mean(weight_g, na.rm=TRUE)) %>% 
+  ungroup()
+
+```
+
+
+## Sort, order and arrange
+
+In this case, we do not compute new variables, we just change the order of the observations
+
+```{r}
+# sort the weigth of the animals
+sort(captures$weight_g)
+```
+
+```{r}
+sort(captures$weight_g, decreasing = TRUE)
+```
+
+Ordering the whole data frame with the *base* package is a little bit tricky (see *?order* for examples), while it's easy with *dplyr*
+
+```{r}
+captures %>%
+  arrange(weight_g)
+```
+
+```{r}
+captures %>%
+  arrange(desc(weight_g))
+```
+
+```{r}
+# DO IT ON YOUR OWN - ARRANGE THE DATA FRAME ACCORDING TO FOOT LEGTH, BOTH IN ASCENDING AND DESCENDING ORDER
+
+
+```
+
+See *?arrange* to order taking into account grouping (see example at the bottom of the help file)
+
+```{r}
+# DO IT ON YOUR OWN
+?arrange
+
+
+```
+
+
+```{r}
+# order according to weight and then to footlenght
+captures %>%
+  arrange(desc(weight_g), footlength_mm)
+```
+
