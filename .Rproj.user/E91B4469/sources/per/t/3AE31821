@@ -3,7 +3,7 @@
     "path": "C:/Users/valen/git/ECMA/IntroductionToR-dplyr.Rmd",
     "project_path": "IntroductionToR-dplyr.Rmd",
     "type": "r_markdown",
-    "hash": "0",
+    "hash": "547801725",
     "contents": "",
     "dirty": false,
     "created": 1679263287956.0,
@@ -12,7 +12,9 @@
     "properties": {
         "chunk_output_type": "inline",
         "source_window_id": "",
-        "Source": "Source"
+        "Source": "Source",
+        "cursorPosition": "11,0",
+        "scrollLine": "0"
     },
     "folds": "",
     "lastKnownWriteTime": 1679261688,
