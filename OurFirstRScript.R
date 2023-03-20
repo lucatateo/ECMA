@@ -1,9 +1,5 @@
 ## ---- Data import ----
 
-# esempio di uso di github desktop
-# inserisco modifiche
-
-
 # using the read.csv function
 y <- read.csv("data/captures.csv",sep=";") 
 class(y) # this is a data frame
