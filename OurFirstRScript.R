@@ -1,5 +1,4 @@
 ## ---- Data import ----
-## modifiche
 
 # using the read.csv function
 y <- read.csv("data/captures.csv",sep=";") 
