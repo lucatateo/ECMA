@@ -1,0 +1,39 @@
+"0","```r
+library(Rmisc)
+library(Hmisc)
+```"
+"1","Loading required package: survival
+Loading required package: Formula
+Loading required package: ggplot2
+Registered S3 method overwritten by 'htmlwidgets':
+  method           from         
+  print.htmlwidget tools:rstudio
+Registered S3 method overwritten by 'data.table':
+  method           from
+  print.data.table     
+
+Attaching package: 'Hmisc'
+
+The following objects are masked from 'package:plyr':
+
+    is.discrete, summarize
+
+The following objects are masked from 'package:base':
+
+    format.pval, units
+"
+"0","```r
+library(ggplot2)
+library(boot)
+```"
+"1","
+Attaching package: 'boot'
+
+The following object is masked from 'package:survival':
+
+    aml
+
+The following object is masked from 'package:lattice':
+
+    melanoma
+"
