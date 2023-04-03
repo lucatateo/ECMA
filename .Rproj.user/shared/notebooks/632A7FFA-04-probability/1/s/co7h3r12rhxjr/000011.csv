@@ -1,0 +1,1 @@
+"0","barplot(table(roll1 + roll2), main = ""2 Dice Sum, 100 Rolls"")  #this works better for this case"

@@ -1,0 +1,2 @@
+"0","y <- read.csv(""data/captures.csv"",sep="";"") "
+"0","y <- na.omit(y[,c(""age"", ""sex"")])"

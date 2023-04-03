@@ -1,0 +1,10 @@
+"0","sample(x=c(""testa"",""croce""), size = 5, replace = TRUE)
+"
+"1","[1]"
+"1"," ""testa"""
+"1"," ""croce"""
+"1"," ""testa"""
+"1"," ""croce"""
+"1"," ""croce"""
+"1","
+"
