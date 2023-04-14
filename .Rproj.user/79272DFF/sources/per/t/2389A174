@@ -1,17 +1,19 @@
 {
-    "id": "5C966092",
-    "path": "~/GitHub/ECMA/06a-t-test.Rmd",
-    "project_path": "06a-t-test.Rmd",
+    "id": "2389A174",
+    "path": "~/GitHub/ECMA/05-ConfidenceIntervals.Rmd",
+    "project_path": "05-ConfidenceIntervals.Rmd",
     "type": "r_markdown",
-    "hash": "0",
+    "hash": "1798671815",
     "contents": "",
     "dirty": false,
-    "created": 1680516466202.0,
+    "created": 1680516446470.0,
     "source_on_save": false,
-    "relative_order": 2,
+    "relative_order": 1,
     "properties": {
         "source_window_id": "",
-        "Source": "Source"
+        "Source": "Source",
+        "cursorPosition": "7,17",
+        "scrollLine": "3"
     },
     "folds": "",
     "lastKnownWriteTime": 1679302948,
