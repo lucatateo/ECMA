@@ -1,0 +1,3 @@
+"0","boot.data <- boot(dati2$weight_g,"
+"0","                  function(x,i) mean(x[i]), "
+"0","                  R=10000)"

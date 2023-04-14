@@ -1,0 +1,4 @@
+"0",""
+"0","#?qqplot"
+"0","qqnorm(ind.w$individual.weight); qqline(ind.w$individual.weight, col=""red"")"
+"0",""

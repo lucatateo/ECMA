@@ -1,0 +1,6 @@
+"0","## is the weight of females and males different?"
+"0",""
+"0","# we use again the summarise dplyr function"
+"0","ind.w %>% "
+"0","  group_by(sex) %>% "
+"0","  summarise(count=n(), class.weight = mean(individual.weight, na.rm = TRUE))"

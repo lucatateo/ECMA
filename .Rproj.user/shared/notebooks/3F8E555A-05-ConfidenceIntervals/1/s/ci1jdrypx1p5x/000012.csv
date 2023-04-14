@@ -1,0 +1,4 @@
+"0","intervalli <- group.CI(weight_g ~ sex,"
+"0","         data= dati2,"
+"0","         ci=0.95)"
+"0","intervalli"

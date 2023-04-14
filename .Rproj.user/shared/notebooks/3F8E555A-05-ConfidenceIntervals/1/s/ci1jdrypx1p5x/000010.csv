@@ -1,0 +1,4 @@
+"0","dati2 <- na.omit(dati)"
+"0","group.CI(weight_g ~ sex,"
+"0","         data= dati2,"
+"0","         ci=0.95)"
