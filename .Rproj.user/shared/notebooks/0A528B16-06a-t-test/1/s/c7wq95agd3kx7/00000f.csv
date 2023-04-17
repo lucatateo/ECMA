@@ -1,3 +1,0 @@
-"0",""
-"0","par(mfrow=c(1,2))"
-"0","qqnorm(w.f); qqline(w.f, col=""red"")"

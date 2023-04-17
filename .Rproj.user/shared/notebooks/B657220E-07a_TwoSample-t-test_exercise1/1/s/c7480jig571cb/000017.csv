@@ -1,0 +1,5 @@
+"0","# normality test"
+"0",""
+"0","# with a qqplot"
+"0","par(mfrow=c(1,2))"
+"0","qqnorm(x); qqline(x, col=""red"")"
