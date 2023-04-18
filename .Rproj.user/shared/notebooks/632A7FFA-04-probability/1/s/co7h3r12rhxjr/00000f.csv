@@ -1,8 +1,0 @@
-"0","n = 500"
-"0","roll1 = NULL  #This initializes our variable - i.e. it creates a spot in memory for it. We need to do this for any vector, table, matrix, dataframe, but not for single numbers"
-"0","roll2 = NULL"
-"0","for (i in 1:n) {"
-"0","    roll1[i] = RollDie(1)"
-"0","    roll2[i] = RollDie(1)"
-"0","}"
-"0","hist((roll1 + roll2), density = 100, breaks = 1:12, prob = T)"
