@@ -1,0 +1,46 @@
+"0",""
+"0","# new <- data.frame(speed = c(5,6,21))"
+"0","# predict(cars.lm, newdata = new, interval = ""confidence"")"
+"0","# predict(cars.lm, newdata = new, interval = ""prediction"")"
+"0","library(HH)"
+"2","Avvertimento: il pacchetto ‘HH’ è stato creato con R versione 4.2.3"
+"2","Caricamento del pacchetto richiesto: lattice
+"
+"2","Caricamento del pacchetto richiesto: grid
+"
+"2","Caricamento del pacchetto richiesto: latticeExtra
+"
+"2","Avvertimento: il pacchetto ‘latticeExtra’ è stato creato con R versione 4.2.3"
+"2","Caricamento del pacchetto richiesto: multcomp
+"
+"2","Avvertimento: il pacchetto ‘multcomp’ è stato creato con R versione 4.2.3"
+"2","Caricamento del pacchetto richiesto: mvtnorm
+"
+"2","Caricamento del pacchetto richiesto: survival
+"
+"2","Caricamento del pacchetto richiesto: TH.data
+"
+"2","Avvertimento: il pacchetto ‘TH.data’ è stato creato con R versione 4.2.3"
+"2","Caricamento del pacchetto richiesto: MASS
+"
+"2","
+Caricamento pacchetto: ‘TH.data’
+
+"
+"2","Il seguente oggetto è mascherato da ‘package:MASS’:
+
+    geyser
+
+"
+"2","Caricamento del pacchetto richiesto: gridExtra
+"
+"2","Avvertimento: il pacchetto ‘gridExtra’ è stato creato con R versione 4.2.3"
+"2","Registered S3 method overwritten by 'htmlwidgets':
+  method           from         
+  print.htmlwidget tools:rstudio
+"
+"2","Registered S3 method overwritten by 'data.table':
+  method           from
+  print.data.table     
+"
+"0","ci.plot(cars.lm)"

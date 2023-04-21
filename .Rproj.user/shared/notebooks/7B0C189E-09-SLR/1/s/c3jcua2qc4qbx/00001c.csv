@@ -1,0 +1,2 @@
+"0","points(cars$speed, fitted(cars.lm), col=""red"", pch=19)"
+"0",""
