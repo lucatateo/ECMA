@@ -35,7 +35,7 @@ shapiro.test(y)
 
 ```{r}
 # homogeneity of variances
-
+var.test(x,y)
 ```
 
 ```{r}

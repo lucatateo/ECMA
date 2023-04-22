@@ -1,0 +1,7 @@
+"0","# multiply by 2 for a two-sided test
+pt(t, 13, lower.tail = FALSE)*2 # < 0.05, REJECT H0: it is unlikely that for this data 
+"
+"1","[1]"
+"1"," 0.01261869"
+"1","
+"

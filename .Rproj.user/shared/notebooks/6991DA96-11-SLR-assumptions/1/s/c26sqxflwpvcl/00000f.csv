@@ -1,0 +1,40 @@
+"0",""
+"0","# install.packages(""lmtest"")"
+"0","library(lmtest)"
+"2","Avvertimento: il pacchetto ‘lmtest’ è stato creato con R versione 4.2.3"
+"2","Caricamento del pacchetto richiesto: zoo
+"
+"2","Avvertimento: il pacchetto ‘zoo’ è stato creato con R versione 4.2.3"
+"2","
+Caricamento pacchetto: ‘zoo’
+
+"
+"2","I seguenti oggetti sono mascherati da ‘package:base’:
+
+    as.Date, as.Date.numeric
+
+"
+"0","dwtest(cars.lm, alternative = ""two.sided"")"
+"1","
+"
+"1","	Durbin-Watson test"
+"1","
+"
+"1","
+"
+"1","data:  "
+"1",""
+"1","cars.lm"
+"1",""
+"1","
+"
+"1","DW = 1.6762, p-value = 0.1904"
+"1","
+"
+"1","alternative hypothesis: "
+"1","true autocorrelation is not 0"
+"1",""
+"1","
+"
+"1","
+"

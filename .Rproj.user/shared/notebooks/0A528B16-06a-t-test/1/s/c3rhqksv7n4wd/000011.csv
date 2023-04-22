@@ -1,0 +1,4 @@
+"0","grouped %>% "
+"0","  summarise(count=n(), individual.weight = mean(weight_g, na.rm = TRUE)) -> ind.w"
+"2","`summarise()` has grouped output by 'animal_id'. You can override using the `.groups` argument."
+"0","ind.w"

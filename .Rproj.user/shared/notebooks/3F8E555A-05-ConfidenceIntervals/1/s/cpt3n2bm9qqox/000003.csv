@@ -1,0 +1,4 @@
+"0","ggplot(intervalli, aes(x=sex, y=weight_g.mean, colour=sex)) +"
+"0","    geom_errorbar(aes(ymin=weight_g.lower, ymax=weight_g.upper), width=.1) +"
+"0","    geom_line() +"
+"0","    geom_point()"
