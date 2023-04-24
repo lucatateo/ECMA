@@ -1,2 +1,0 @@
-"0","as.data.frame(CI(na.omit(dati$weight_g), ci=0.95)) -> CImean"
-"0","CImean"

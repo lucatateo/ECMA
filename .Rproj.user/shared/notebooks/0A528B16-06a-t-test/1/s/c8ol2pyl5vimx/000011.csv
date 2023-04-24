@@ -1,4 +1,0 @@
-"0","adults %>% "
-"0","  group_by(animal_id, sex) -> grouped"
-"0","grouped %>% "
-"0","  arrange(animal_id)"

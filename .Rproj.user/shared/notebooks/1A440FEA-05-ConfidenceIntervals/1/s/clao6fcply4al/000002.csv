@@ -1,3 +1,0 @@
-"0","```r
-dati <- read.csv(\"data/captures.csv\", sep=\";\")
-```"

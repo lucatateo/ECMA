@@ -1,0 +1,169 @@
+---
+title: "Multiple linear regression - `trees` dataset (solved)"
+output: 
+  html_document: 
+    theme: paper
+    toc: yes
+    toc_float: yes
+  html_notebook: 
+    toc: yes
+    toc_float: yes
+---
+
+
+## Problem 8.6
+
+The R dataset **trees** contains girth (diameter), height and volume (of boardfeet) measurements for several trees of a species of cherry tree. Describe the distribution of each of these 3 variables. Are any long tailed, short-tailed, skewed?
+
+```{r problem8.6-data}
+# load the data
+data(trees) # this is a dataframe
+class(trees)
+```
+
+```{r problem8.6-data-structure}
+head(trees)
+str(trees)
+```
+
+
+```{r problem8.6-histogram}
+# histograms
+hist(trees$Girth)
+hist(trees$Height)
+hist(trees$Volume)
+```
+
+
+```{r problem8.6-boxplot}
+# boxplots
+boxplot(trees$Girth)
+boxplot(trees$Height)
+boxplot(trees$Volume)
+```
+
+The graphs show us that the distributions are not symmetric (maybe just Height looks quite good, and the boxplot seems also ok for Girth...). We test for normality:
+
+```{r problem8.6-normality-girth}
+# normality test
+shapiro.test(trees$Girth)
+qqnorm(trees$Girth); qqline(trees$Girth)
+```
+
+```{r problem8.6-normality-height}
+# normality test
+shapiro.test(trees$Height)
+qqnorm(trees$Height); qqline(trees$Height)
+```
+
+```{r problem8.6-normality-volume}
+# normality test
+shapiro.test(trees$Volume)
+qqnorm(trees$Volume); qqline(trees$Volume)
+```
+
+
+The Shapiro test is significant for Volume: **the distribution of this latter variable is not normal and it is positive skewed**!
+
+
+## Multiple linear regression
+
+We use a dataset of girth (diameter, in inches), height, and volume for black cherry trees. Measurements were made in 31 felled black cherry trees. The data are in the *datasets* package.
+
+```{r data-trees}
+
+data("trees")
+
+```
+
+Does the volume depends on girth and height? What is the mean volume of trees when girth and height are zero? What is the mean increase in volume when there is a one-unit increase in girth?
+
+```{r trees-regression}
+
+mod <- lm(Volume ~ Girth + Height, data=trees)
+summary(mod)
+# the mean increase in volume when there is a one-unit increase in girth is 4.7
+
+# Volume.tr <- trees$Volume^0.30
+# mod.tr <- lm(Volume.tr ~ Girth + Height, data=trees)
+# summary(mod.tr)
+
+
+```
+
+Is the overall model significant?   
+YES, IT IS (LOOK AT THE F-STATISTIC)
+
+Now, fit a quadratic model to the variable volume and girth. Display the results with *summary*.
+
+```{r trees-quadratic}
+
+plot(Volume ~ Girth, data=trees)
+
+mod.q <- lm(Volume ~ Girth + I(Girth^2) + Height + I(Height^2), data=trees)
+summary(mod.q)
+# alternative code:
+mod.q <- lm(Volume ~ poly(Girth, 2, raw=TRUE) + poly(Height, 2, raw=TRUE), data=trees)
+summary(mod.q)
+
+```
+
+
+```{r trees-quadratic2}
+
+plot(Volume ~ Girth, data=trees)
+
+mod.q <- lm(Volume ~ Girth + I(Girth^2) + Height , data=trees)
+summary(mod.q)
+```
+
+Perhaps the girth and height of the tree interact to influence its volume: investigate a model including an interaction term for the two explanatory variables.
+
+```{r trees-interaction}
+
+mod.int <- lm(Volume ~ Girth * Height, data=trees)
+summary(mod.int)
+
+```
+
+
+```{r trees-regression2}
+
+mod <- lm(Volume ~ Girth + Height, data=trees)
+plot(mod)
+plot(trees$Volume ~ trees$Girth)
+plot(trees$Volume ~ trees$Height)
+
+```
+
+```{r}
+library(sjPlot)
+# plot_model(mod)
+```
+
+```{r}
+plot_model(mod, type = "eff", terms = "Girth")
+```
+
+```{r}
+plot_model(mod, type = "eff", terms = "Height")
+```
+
+
+```{r}
+plot_model(mod.int, type = "int") # # type = "int" automatically selects groups for continuous moderator variables
+```
+
+
+```{r}
+plot_model(mod.int, type = "pred", terms = c("Girth", "Height [60,80]"))
+```
+
+
+```{r}
+# switch moderator
+plot_model(mod.int, type = "pred", terms = c("Height", "Girth"))
+```
+
+
+

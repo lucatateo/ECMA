@@ -1,2 +1,0 @@
-"0","x <- rnorm(100,0,1)"
-"0","curve(df(x, df1=1, df2=1), from=0, to=5, lty=1, ylim=c(0,2))"

@@ -1,6 +1,0 @@
-"0","```r
-CI(dati$weight_g, ci=0.95)
-```"
-"1","upper  mean lower 
-   NA    NA    NA 
-"

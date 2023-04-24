@@ -1,6 +1,0 @@
-"0","```r
-CI(na.omit(dati$weight_g), ci=0.95)
-```"
-"1","   upper     mean    lower 
-31.37342 29.83193 28.29044 
-"
