@@ -1,0 +1,45 @@
+---
+title: "Quadratic regression and interactions in R - exercise"
+output: 
+  html_document: 
+    theme: paper
+    toc: yes
+    toc_float: yes
+  html_notebook: 
+    toc: yes
+    toc_float: yes
+---
+
+
+```{r}
+library(car)
+library(dplyr)
+library(ggcorrplot)
+```
+
+
+# Exercise
+
+We now consider the dataset from air pollution studies, on the sulphur dioxide concentration.
+
+```{r}
+pollution <- read.table("data/sulphur.dioxide.txt", header=TRUE)
+```
+
+First, fit a regression model to the data, including quadratic terms for the predictors.
+
+Second, consider the inclusion of interaction terms as well.
+Include interactions for the following variables:
+
+* Wind:Rain
+* Wind:Wet.days
+* Population:Wind
+* Temp:Wet.days
+* Temp:Wind
+
+# Solution 
+
+```{r}
+
+```
+

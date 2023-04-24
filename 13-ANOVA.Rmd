@@ -1,0 +1,144 @@
+---
+title: "Qualitative explanatory variables"
+output: 
+  html_document: 
+    theme: paper
+    toc: yes
+    toc_float: yes
+  html_notebook: 
+    toc: yes
+    toc_float: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Regression with a qualitative and a quantitative explanatory variable
+
+The *trees* data do not have any qualitative explanatory variables, so we will construct one
+for illustrative purposes. We will replace the variable
+*Height* by a new variable *Tall* which indicates whether or not the cherry tree is taller than a
+certain threshold (the sample median height of 76 ft).   
+In R, for this purpose we use the *cut* function:
+
+```{r Tall}
+trees$Tall <- cut(trees$Height, breaks = c(-Inf, 76, Inf),
+                  labels = c("no", "yes"))
+trees$Tall[1:5]
+class(trees$Tall)
+```
+
+We perform MLR as we normally would:
+
+```{r treesdummy, echo=FALSE}
+treesdummy.lm <- lm(Volume ~ Girth + Tall, data = trees)
+summary(treesdummy.lm)
+```
+
+(Note: R defines Tallyes automatically without input from the user)   
+
+We conclude
+that the mean response differs for trees with *Tall = yes* and trees with *Tall = no*.   
+
+## Plot of the regression lines
+
+We can see a plot of the two regression lines:
+
+```{r treesdummy-plot}
+# # we split the trees data into
+# # two pieces, with groups determined by the Tall variable:
+# treesTall <- split(trees, trees$Tall)
+# # we add the Fitted values to each
+# # piece via predict
+# treesTall[["yes"]]$Fit <- predict(treesdummy.lm, treesTall[["yes"]])
+# treesTall[["no"]]$Fit <- predict(treesdummy.lm, treesTall[["no"]])
+# # we set up a plot for the variables Volume versus Girth
+# # but we do not
+# # plot anything yet (type = n) because we want to use different symbols for the two groups
+# plot(Volume ~ Girth, data = trees, type = "n")
+# # we add points to the plot for the Tall = yes trees and use an open circle for a plot character
+# # (pch = 1), followed by points for the Tall = no trees with a triangle character (pch = 2).
+# points(Volume ~ Girth, data = treesTall[["yes"]], pch = 1)
+# points(Volume ~ Girth, data = treesTall[["no"]], pch = 2)
+# # we add regression lines to the plot, one for each group
+# lines(Fit ~ Girth, data = treesTall[["yes"]])
+# lines(Fit ~ Girth, data = treesTall[["no"]])
+
+plot(Volume ~ Girth, data = trees)
+abline(a = -34, b = 4.69, col="red") # alberi bassi
+abline(a = -30, b = 4.69, col="blue") # alberi alti
+
+```
+
+
+# Regression with just one qualitative variable (two levels: yes/no)
+
+Using the above regression model, we concluded
+that the mean response differs for trees with *Tall = yes* and trees with *Tall = no*.  
+That is we assessed that the mean *Volume* of tall trees is actually different from the *Volume* of small trees.   
+We now run a model including just the qualitative variable *Tall* - compare the results with those obtained with a simple *t*-test:
+
+```{r treesttest}
+
+treesdummy.lm <- lm(Volume ~ Tall, data = trees)
+summary(treesdummy.lm)
+
+head(trees)
+tall.trees <- subset(trees, trees$Tall=="yes")
+small.trees <- subset(trees, trees$Tall=="no")
+t.test(tall.trees$Volume, small.trees$Volume)
+
+```
+
+Are the results consistent?
+
+# Regression with just one qualitative variables (more levels)
+
+(Example from Verzani - Simple R)
+A school is trying to grade 24 different scholarship applications. The job is carried out by 3 graders. The scholarship committee would like to ensure that each grader is using the same
+grading scale, as otherwise the students aren't being treated equally. One approach to checking if the graders are using the same scale is to randomly assign each grader 8 exams and have them grade. Then compare the grades for the 3 graders knowing that the differences should be due to chance errors if the graders all grade equally.
+
+```{r graders}
+scores.graderA = c(4,3,4,5,2,3,4,5)
+scores.graderB = c(4,4,5,5,4,5,4,4)
+scores.graderC = c(3,4,2,4,5,5,4,4)
+scores <- c(scores.graderA,scores.graderB,scores.graderC)
+graders <- c(rep("A",8), rep("B",8), rep("C",8))
+scores.graders <- data.frame(graders,scores)
+boxplot(scores ~ graders, data=scores.graders)
+```
+
+It appears that grader B is different from graders A and C. We test whether there's a difference or not with a regression analysis:
+
+```{r graders-regression}
+
+mod <- lm(scores ~ graders, data=scores.graders)
+summary(mod)
+
+```
+
+```{r anova}
+
+summary(aov(scores ~ graders, data=scores.graders))
+# oppure
+anova.prova <- aov(scores ~ graders, data=scores.graders)
+summary(anova.prova)
+                   
+
+```
+
+
+```{r}
+
+anova(lm(scores ~ graders, data=scores.graders))
+
+```
+
+
+```{r}
+
+oneway.test(scores ~ graders, data=scores.graders, var.equal=T) #Test whether two or more samples from normal distributions have the same means. The variances are not necessarily assumed to be equal.
+
+```
+

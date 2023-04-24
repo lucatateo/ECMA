@@ -1,0 +1,97 @@
+---
+title: "t-test"
+output: 
+  html_document: 
+    theme: paper
+    toc: yes
+    toc_float: yes
+---
+
+
+# Exercise 1
+
+The paired samples t-test is used to check if there are any differences in the mean of the same sample at two different time points. For example a medical researcher collects data on the same patients before and after a therapy. A paired t-test will show if the therapy improves patient outcomes.
+
+There are several assumptions that need to be satisfied so that results of a paired t test are valid. They are listed below:
+
+* The measured variable is continuous
+* The differences between the two groups are approximately normally distributed
+* We should not have any outliers in our data
+* An adequate sample size is required
+
+For this exercise we will use the anorexia data set available in package MASS. The data set contains weights of girls before and after anorexia treatment. Our interest is to know if the treatment caused any change in weight.
+
+Load the data and inspect its structure:
+```{r}
+library(MASS)
+data(anorexia)
+```
+
+```{r}
+
+```
+
+
+
+Generate descriptive statistics on weight before treatment (use the function `summary()`)
+```{r}
+
+```
+
+Generate descriptive statistics on weight after treatment
+```{r}
+
+```
+
+Create a new variable that contains the differences in weight before and after treatment:
+
+```{r}
+
+```
+
+Create a boxplot to identify any outliers
+```{r}
+
+```
+
+Create a histogram to visually inspect normality
+```{r}
+
+```
+
+Perform a normality test on the differences
+```{r}
+
+```
+
+Perform a power analysis to assess sample adequacy (use the function `pwr.t.test()` in the `pwr` package)
+```{r}
+
+```
+
+Perform a paired t test
+```{r}
+
+```
+
+Interpret the results!
+
+
+# Exercise 2
+
+Load the data set 'blood'. It includes the blood pressure of 15 males, taken by machine and expert.
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+library(UsingR)
+data(blood)
+blood
+# read.csv("data/blood.csv")
+```
+
+* Do a two-sample t-test on the data.
+* Do the assumptions seems to be met?
+* Is the paired sample test more appropriate? (perform it)
+* Did the two tests agree anyways?
+
+
+

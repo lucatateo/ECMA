@@ -1,0 +1,35 @@
+---
+title: "ANOVA and multiple comparisons"
+output: 
+  html_document: 
+    theme: paper
+    toc: yes
+    toc_float: yes
+---
+
+
+# Exercise 1
+
+Five treatments (T1, T2, T3, T4, T5) against cold sores were randomly assigned to 30 patients (six per treatment group). For each patient, the time (in days) between the apparition of the cold sore and complete scarring was measured. Compare the means of the scarring times for the five groups:
+- make a boxplot of the scarring times for each treatment;
+- perform an ANOVA using the function `aov()` and compare the output with the one obtained with `lm()`;
+- perform multiple comparisons using the function `TukeyHSD()` and plot the results
+
+
+```{r echo=FALSE}
+dati <- data.frame(treatment = c(rep("T1", 6), rep("T2", 6), rep("T3", 6), rep("T4", 6), rep("T5", 6)),
+                   times = c(5,8,7,7,10,8,
+                             4,6,6,3,5,6,
+                             6,4,4,5,4,3,
+                             7,4,6,6,3,5,
+                             9,3,5,7,7,6))
+head(dati)
+```
+
+
+<!-- Source: Lafaye de Micheaux, P., Drouilhet, R. & Liquet, B. (2013) The R Software. Springer New York, New York, NY. -->
+
+
+
+
+

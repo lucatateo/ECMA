@@ -1,0 +1,42 @@
+---
+title: "t-test"
+output: 
+  html_document: 
+    theme: paper
+    toc: yes
+    toc_float: yes
+---
+
+
+# Exercise 1
+
+It is well known that the more beer you drink, the more your blood alcohol level (BAL) rises. Suppose we have the following data on student beer consumption:
+
+```{r echo=FALSE}
+beer <- data.frame(Student = 1:10,
+                   Beers = c(5, 2, 9, 8, 3, 7, 3, 5, 3, 5),
+                   BAL = c(0.10, 0.03, 0.19, 0.12, 0.04, 0.095, 0.07, 0.06, 0.02, 0.05))
+beer
+# read.csv("data/beer.csv")
+```
+
+Load the dataset 'beer'. Make a scatterplot and fit the data with a regression line. Test the hypothesis that another beer raises your BAL by 0.02 percent against the alternative that it is less.
+
+
+# Exercise 2
+
+In 1609 Galileo proved that the trajectory of a body falling with a horizontal component is a parabola. In the course of gaining insight into this fact, he set up an experiment which measured two variables, a height and a distance, yielding the following data:
+
+
+```{r, echo=FALSE}
+Galileo <- data.frame(height = c(100, 200, 300, 450, 600, 800, 1000),
+                    dis = c(253, 337, 395, 451, 495, 534, 574))
+Galileo
+# read.csv("data/Galileo.csv")
+```
+
+In plotting the data, Galileo apparently saw the parabola and with this insight proved it mathematically.
+So, we now expect a parabola. Use linear regression to find the coefficients of the parabola. Compare the model with a simpler one, without quadratic term. Are the linear regression assumptions met? Use diagnostic plots to verify.
+
+
+

@@ -1,0 +1,129 @@
+---
+title: "Factorial experiment example - weight gain"
+output: 
+  html_document: 
+    theme: paper
+    toc: yes
+    toc_float: yes
+  html_notebook: 
+    toc: yes
+    toc_float: yes
+---
+
+# Problem
+(source: Crawley, The R book)
+
+Our example comes from a farm-scale trial of animal diets.
+There are two factors: diet and supplement.
+
+Diet is a factor with three levels: barley, oats and wheat.
+
+Supplement is a factor with four levels: agrimore, control, supergain and supersupp.
+
+The response variable is weight gain after 6 weeks.
+
+```{r}
+weights <- read.csv("data/growth2.txt", sep="\t")
+head(weights)
+```
+
+```{r}
+table(weights$diet, weights$supplement)
+```
+
+
+
+```{r}
+with(weights,
+     coplot(gain ~ diet|supplement,rows=2))
+```
+
+We will perform an analysis of variance including a factor for the interaction between diet and supplement:
+
+```{r}
+model<-aov(gain~diet*supplement, data = weights)
+summary(model)
+```
+
+The ANOVA table shows that there is no hint of any interaction between the two
+explanatory variables (p=0.917): the effects of diet and supplement are additive.    
+
+Let's check for this graphically...
+
+```{r}
+weights$diet <- relevel(weights$diet, ref="oats")
+with(weights, interaction.plot(diet,supplement, response = gain))
+```
+
+
+Since interactions are not significant, we can consider simplifying our model:
+
+```{r}
+model2 <- aov(gain~diet + supplement, data = weights)
+summary(model2)
+```
+
+Which one is best?
+
+The second model is much simpler than the first one:
+
+```{r}
+summary.lm(model)
+```
+
+
+```{r}
+summary.lm(model2)
+```
+
+We can compare them directly:
+```{r}
+anova(model,model2)
+```
+
+The second model is simpler and it is not significantly worst than the first model, so we go for model2 and we try to interpret it.
+
+Go back and look again at the summary of model2:   
+
+* the barley and wheat diet are statistically different, in terms of weight gain, from the oats diet, but what about the difference between wheat and barley?
+* it's the same for the control and supergain supplements with respect to agrimore, but what about the difference between them? and with supersupp??
+
+Let's check with a TukeyHSD test:
+
+```{r}
+TukeyHSD(model2)
+```
+
+
+```{r}
+plot(TukeyHSD(model2))
+```
+
+Other plots using the jtools package:
+```{r}
+library(sjPlot)
+# plot_model(model2, type = "diag")
+plot_model(model2, type="eff")
+```
+
+check here for an example with a significant interaction: https://cran.r-project.org/web/packages/jtools/vignettes/categorical.html
+
+
+# Interactions with at least one continuous predictor
+(source: https://cran.r-project.org/web/packages/jtools/vignettes/interactions.html)
+
+
+This famous (Fisher's or Anderson's) iris data set gives the measurements in centimeters of the variables sepal length and width and petal length and width, respectively, for 50 flowers from each of 3 species of iris. The species are Iris setosa, versicolor, and virginica.
+
+```{r}
+data(iris)
+head(iris)
+```
+
+Please note that here we use `lm` rather than `aov`:
+
+```{r}
+fitiris <- lm(Petal.Length ~ Petal.Width * Species, data = iris)
+library(jtools)
+plot_model(fitiris, type="int")
+```

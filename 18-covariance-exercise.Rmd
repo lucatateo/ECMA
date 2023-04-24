@@ -1,0 +1,53 @@
+---
+title: "Exercise - analysis of covariance (ANCOVA)"
+output: html_notebook
+---
+
+(Source: Crawley, The R book)
+
+# Definition
+
+Analysis of covariance (ANCOVA) combines elements from regression and analysis of
+variance. The response variable is continuous, and there is at least one continuous explanatory
+variable and at least one categorical explanatory variable.
+
+# Example
+
+Our worked example concerns an experiment on the
+impact of grazing on the seed production of a biennial plant.    
+Forty plants were allocated to
+two treatments, grazed and ungrazed, and the grazed plants were exposed to rabbits during
+the first two weeks of stem elongation. They were then protected from subsequent grazing
+by the erection of a fence and allowed to regrow. Because initial plant size was thought
+likely to influence fruit production, the diameter of the top of the rootstock was measured
+before each plant was potted up. At the end of the growing season, the fruit production (dry
+weight in milligrams) was recorded on each of the 40 plants, and this forms the response
+variable in the following analysis.   
+
+The object of the exercise is to estimate the parameters of the minimal adequate model
+for these data.
+
+
+```{r}
+regrowth <- read.table("data/ipomopsis.txt", sep="\t", header=T)
+head(regrowth)
+```
+
+* Describe the dataset and look at the distribution of the dependent variable.
+* Inspect the data plotting fruit production against root size for each of the two treatments separately
+* Calculate the mean fruit production for grazed and ungrazed plants and plot the data: are the means statistically different? Specify the null and alternative hypothesis and test using a t-test
+* Now fit a regression model including both Root and Grazing as explanatory variables and comment on the results.
+* Try to remove the interaction terms and compare the first and second model through an ANOVA table.
+* Further simplify the model removing Grazing and compare again through an ANOVA table.
+* Compare the models using the *step* function.
+
+
+
+# Summary
+
+In the analyses of covariance, first you compute two different regression lines.   
+Next, you see whether the slopes are significantly different from zero.
+
+* If the slopes of the regression lines are different, the lines cross each other somewhere (you check for the significance of the interaction term). One group has higher Y values in one part of the graph and lower Y values in another part of the graph. In this case we are thus not very interested in the difference between the intercepts.  
+* If the slopes are not significantly different, you then draw a regression line through each group of points, all with the same slope.   
+Then, you test the null hypothesis that all of the Y intercepts of the regression lines with a common slope are the same. Because the lines are parallel, saying that they are significantly different at one point (the Y intercept) meand that the lines are different at any point.

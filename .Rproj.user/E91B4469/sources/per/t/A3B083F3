@@ -1,24 +1,24 @@
 {
-    "id": "7DD1B80A",
-    "path": "C:/Users/valen/git/ECMA/12-MLR-trees-solved.Rmd",
-    "project_path": "12-MLR-trees-solved.Rmd",
+    "id": "A3B083F3",
+    "path": "C:/Users/valen/git/ECMA/16_CorrelationRegression.Rmd",
+    "project_path": "16_CorrelationRegression.Rmd",
     "type": "r_markdown",
-    "hash": "0",
+    "hash": "2735309262",
     "contents": "",
     "dirty": false,
-    "created": 1682335919067.0,
+    "created": 1682335910854.0,
     "source_on_save": false,
-    "relative_order": 4,
+    "relative_order": 3,
     "properties": {
         "source_window_id": "",
         "Source": "Source"
     },
     "folds": "",
-    "lastKnownWriteTime": 1650511608,
+    "lastKnownWriteTime": 1650587827,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1650511608,
+    "last_content_update": 1650587827,
     "read_only": false,
     "read_only_alternatives": []
 }

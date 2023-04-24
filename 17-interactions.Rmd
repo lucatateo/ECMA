@@ -1,0 +1,37 @@
+---
+title: "Factorial experiment example - weight gain"
+output: 
+  html_document: 
+    theme: paper
+    toc: yes
+    toc_float: yes
+  html_notebook: 
+    toc: yes
+    toc_float: yes
+---
+
+# Problem
+(source: Crawley, The R book)
+
+Our example comes from a farm-scale trial of animal diets.
+There are two factors: diet and supplement.
+
+Diet is a factor with three levels: barley, oats and wheat.
+
+Supplement is a factor with four levels: agrimore, control, supergain and supersupp.
+
+The response variable is weight gain after 6 weeks.
+
+```{r}
+weights <- read.csv("data/growth2.txt", sep="\t")
+head(weights)
+```
+
+Perform an analysis of variance including a factor for the interaction between diet and supplement.
+
+# Solution
+
+```{r}
+
+```
+

@@ -1,0 +1,68 @@
+---
+title: "Binomial regression - The Donner Party"
+output: 
+  html_document: 
+    theme: paper
+    toc: yes
+    toc_float: yes
+  html_notebook: 
+    toc: yes
+    toc_float: yes
+---
+
+In 1846, the Donner party (Donner and Reed families) left Springfield, Illinois for California in covered wagons. After reaching Fort Bridger, Wyoming, the leaders decided to find a new route to Sacramento. They became stranded in the eastern Sierra Nevada mountains at a place now called Donner Pass (right) when the region was hit by heavy snows in late October. By the time the survivors were rescued on April 21, 1847, 40 out of 87 had died.
+
+The dataset for the analysis contains 45 observations, and the following columns: 1) `age`, 2) `sex` (1 = male, 0 = female), 3) `survive` (1 = survived, 0 = dead).
+
+```{r}
+donner <- read.table("data/donner.txt", header = TRUE)
+head(donner)
+```
+
+1. What is the relationship between survival and gender? Analyze the two-way contingency table considering the variables `sex` and `survive` and perform a chi-square test of independence to the data.
+2. Predict the probability of survival as a function of age by fitting a logistic regression model, plot and interpret the results
+3. After taking into account age, are women more likely to survive harsh conditions than men? Compare a full model (both age and sex explanatory variables) with a reduced one (excluding sex)
+4. What is the probability of survival for a 24 year old male? What about 24 year old female?
+5. Does age affect the survival rate of men and women differently? Plot the results of the previous model for males and females separately. Fit a model including an interaction term between age and sex.
+
+
+## 1. What is the relationship between survival and gender? Analyze the two-way contingency table considering the variables `sex` and `survive` and perform a chi-square test of independence to the data.
+
+```{r}
+
+```
+
+
+## 2. Predict the probability of survival as a function of age by fitting a logistic regression model, plot and interpret the results
+
+```{r}
+
+```
+
+
+
+## 3. After taking into account age, are women more likely to survive harsh conditions than men? Compare a full model (both age and sex explanatory variables) with a reduced one (excluding sex)
+
+```{r}
+
+```
+
+
+
+## 4. What is the probability of survival for a 24 year old male? What about 24 year old female? Plot the results of the previous model for males and females separately.
+
+```{r}
+
+```
+
+
+
+## 5. Does age affect the survival rate of men and women differently?  Fit a model including an interaction term between age and sex and plot it.
+
+
+```{r}
+
+```
+
+
+
