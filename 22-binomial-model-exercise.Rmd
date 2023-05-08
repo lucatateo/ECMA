@@ -139,8 +139,8 @@ fm1.noexp <- glm(CattSiNo ~ Incl +
              copveg +
              # NSpecie +
              # media.rocce +
-             mediana.rocce +
-             sd.rocce, #+
+             mediana.rocce, #+
+             #sd.rocce, #
              # Esp.tr,
            family=binomial, data=dati.mod.new)
 #, offset=Noccasioni)
@@ -211,8 +211,9 @@ The coefficients in logit form can be be treated as in normal regression in term
 Transform the logit of your y-value to probability to get a sense of the probability of the modeled event.
 
 ```{r}
-predict.alt <- predict(fm2, data.frame(Alt=dati.mod.new$Alt,
-                                       media.rocce=mean(dati.mod.new$media.rocce)),
+predict.alt <- predict(fm2,
+                       data.frame(Alt=dati.mod.new$Alt,
+                                  media.rocce=mean(dati.mod.new$media.rocce)),
                        type = "response")
 tab <- data.frame(Alt=dati.mod.new$Alt,
            prob = predict.alt)

@@ -1,5 +1,0 @@
-"0",""
-"0","par(mfrow=c(1,2))"
-"0","dotchart(dati.mod$sd.rocce,"
-"0","         ylab = ""Order of observations"","
-"0","         xlab = ""SD diam"", main = """")"

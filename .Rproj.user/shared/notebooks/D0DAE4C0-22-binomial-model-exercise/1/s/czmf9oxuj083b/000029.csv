@@ -1,3 +1,0 @@
-"0","dati.mod.new2 <- cbind(dati.mod, logSD = log(dati.mod$sd.rocce))"
-"0","dati.mod.new2 <- data.frame(dati.mod, logSD = log(dati.mod$sd.rocce))"
-"0","head(dati.mod.new2)"

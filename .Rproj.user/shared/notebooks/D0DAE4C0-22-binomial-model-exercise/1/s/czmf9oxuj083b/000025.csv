@@ -1,4 +1,0 @@
-"0","dati.mod.new <- subset(dati.mod, dati.mod$sd.rocce < 200)"
-"0",""
-"0","# trasformazione della variabile x"
-"0","boxplot(dati.mod$sd.rocce)"

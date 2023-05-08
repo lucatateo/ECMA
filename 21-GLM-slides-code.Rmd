@@ -62,8 +62,6 @@ pairs(iris[1:4], pch = 21)
 
 
 
-
-
 ### Diagnostic plots based on residuals
 
 ```{r diagnosticplots}

@@ -1,8 +1,0 @@
-"0","predict.alt <- predict(fm2, data.frame(Alt=dati.mod.new$Alt,"
-"0","                                       media.rocce=mean(dati.mod.new$media.rocce)),"
-"0","                       type = ""response"")"
-"0","tab <- data.frame(Alt=dati.mod.new$Alt,"
-"0","           prob = predict.alt)"
-"0","# tab"
-"0","library(dplyr)"
-"0","arrange(tab, Alt)"

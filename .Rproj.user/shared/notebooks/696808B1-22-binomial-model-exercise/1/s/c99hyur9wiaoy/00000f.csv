@@ -1,0 +1,19 @@
+"0","library(sjPlot)"
+"2","Avvertimento: il pacchetto ‘sjPlot’ è stato creato con R versione 4.2.3"
+"2","Learn more about sjPlot with 'browseVignettes(""sjPlot"")'.
+"
+"0","plot_model(fm2, type = ""pred"")"
+"2","Data were 'prettified'. Consider using `terms=""Alt
+  [all]""` to get smooth plots.
+"
+"2","Data were 'prettified'. Consider using
+  `terms=""media.rocce [all]""` to get smooth plots.
+"
+"1","$Alt
+"
+"1","
+"
+"1","$media.rocce
+"
+"1","
+"
