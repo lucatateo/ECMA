@@ -1,0 +1,2 @@
+"0","varexpl <- dati.mod[,8:15]"
+"0","head(varexpl)"

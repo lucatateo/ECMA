@@ -1,0 +1,2 @@
+"0","with(dati.mod,"
+"0","     boxplot(sd.rocce ~ CattSiNo, main=""SD diam""))"

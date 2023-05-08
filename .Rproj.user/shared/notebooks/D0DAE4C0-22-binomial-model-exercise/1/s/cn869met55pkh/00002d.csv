@@ -1,0 +1,2 @@
+"0","with(dati.mod,"
+"0","     boxplot(Esp.tr ~ CattSiNo, main=""Aspect""))"

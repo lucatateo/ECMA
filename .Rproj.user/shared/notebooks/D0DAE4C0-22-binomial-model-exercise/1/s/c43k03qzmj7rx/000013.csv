@@ -1,0 +1,5 @@
+"0",""
+"0","par(mfrow=c(1,2))"
+"0","termplot(fm2, se=TRUE, col.term = ""red"", col.se = ""grey"","
+"0","         ylabs = rep(""odds ratio"",2),"
+"0","         main = c(""Alt"",""Mean diam""), cex.main = 0.7)"

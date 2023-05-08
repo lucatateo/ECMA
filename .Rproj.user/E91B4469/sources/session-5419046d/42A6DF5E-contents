@@ -1,0 +1,136 @@
+---
+title: "Limitations and extensions of linear regression"
+output: 
+  html_document: 
+    theme: paper
+    toc: yes
+    toc_float: yes
+  html_notebook: 
+    toc: yes
+    toc_float: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Data exploration
+
+### Boxplot
+
+```{r captures-boxplot-varwidth}
+
+# dati <- read.csv("slides/data/captures.csv", sep=";")[,c("capture_id","weight_g","sex","age")]
+dati <- read.csv("data/captures.csv", sep=";")[,c("capture_id","weight_g","sex","age")]
+dati <- na.omit(dati)
+dati$classe <- paste(dati$sex,dati$age)
+# head(dati)
+dati$classe[dati$classe=="F G"] <- "M G"
+
+myData.mean <- aggregate(na.omit(dati$weight_g),
+                         by = list(factor(dati$classe)),
+                         FUN = 'mean')
+
+boxplot(dati$weight_g ~ dati$classe, varwidth = TRUE)
+
+```
+
+
+### Cleveland dotplot
+
+```{r cleveland-dotplots}
+
+par(mfrow=c(1,2))
+dotchart(dati$weight_g,
+         ylab = "Order of observations",
+         xlab = "Weight", main = "")
+dotchart(dati$weight_g,
+         groups = factor(dati$classe),
+         ylab = "Age/sex class",
+         xlab = "Weight", main = "")
+par(mfrow=c(1,1))
+
+```
+
+
+### Pairplot
+
+
+```{r}
+pairs(iris[1:4], pch = 21)
+```
+
+
+
+
+
+### Diagnostic plots based on residuals
+
+```{r diagnosticplots}
+data(cars)
+cars.lm <- lm(dist ~ speed, data = cars)
+par(mfrow=c(2,2))
+plot(cars.lm)
+par(mfrow=c(1,1))
+```
+
+
+## Other distributions
+
+### Data
+
+```{r catture-trappola}
+
+# dati <- read.csv("slides/data/catture-trappola.csv", sep=";")
+dati <- read.csv("data/catture-trappola.csv", sep=";")
+head(dati)
+par(mfrow=c(1,2))
+hist(dati$CattSiNo)
+hist(dati$Ncatture)
+par(mfrow=c(1,1))
+
+```
+
+
+### Binomial distribution
+
+```{r binomial}
+
+?dbinom
+
+```
+
+
+
+
+### Poisson distribution
+
+```{r poisson-distr}
+
+x1 <- 0:10; Y1 <- dpois(x1, lambda = 3)
+x2 <- 0:10; Y2 <- dpois(x2, lambda = 5)
+x3 <- 0:40; Y3 <- dpois(x3, lambda = 10)
+x4 <- 50:150; Y4 <- dpois(x4, lambda = 100)
+XLab <- "Y values"; YLab <- "Probabilities"
+op <- par(mfrow = c(2, 2))
+plot(x1, Y1, type = "h", xlab = XLab, ylab = YLab,
+main = "Poisson with mean 3")
+plot(x2, Y2, type = "h", xlab = XLab, ylab = YLab,
+main = "Poisson with mean 5")
+plot(x3, Y3, type = "h", xlab = XLab, ylab = YLab,
+main = "Poisson with mean 10")
+plot(x4, Y4, type = "h", xlab = XLab, ylab = YLab,
+main = "Poisson with mean 100")
+par(op)
+
+```
+
+
+```{r negative-binomial}
+
+?dnbinom
+
+```
+
+
+

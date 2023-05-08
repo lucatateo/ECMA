@@ -1,0 +1,145 @@
+---
+title: "Multicollinearity Essentials and VIF in R"
+output: 
+  html_document: 
+    theme: paper
+    toc: yes
+    toc_float: yes
+  html_notebook: 
+    toc: yes
+    toc_float: yes
+---
+
+
+```{r}
+library(car)
+library(dplyr)
+library(ggcorrplot)
+```
+
+
+# Collinearity
+
+[Source](http://www.sthda.com/english/articles/39-regression-model-diagnostics/160-multicollinearity-essentials-and-vif-in-r/) 
+
+In multiple regression, two or more **predictor variables** might be correlated with each other. This situation is referred as **collinearity**.
+
+There is an extreme situation, called **multicollinearity**, where collinearity exists between three or more variables even if no pair of variables has a particularly high correlation. This means that there is **redundancy** between predictor variables.
+
+In the presence of multicollinearity, **the solution of the regression model becomes unstable**.
+
+
+# Example
+
+## Correlation analysis
+
+Collinearity issues can be assessed in different ways. The simplest one involves computing the correlation coefficients between variables.
+
+We’ll use the Boston data set in `MASS` package for predicting the median house value (`mdev`) in Boston Suburbs, based on multiple predictor variables.
+
+```{r}
+# Load the data
+data("Boston", package = "MASS")
+# Split the data into training and test set
+# set.seed(123)
+# training.samples <- Boston$medv %>%
+#   createDataPartition(p = 0.8, list = FALSE)
+# train.data  <- Boston[training.samples, ]
+# test.data <- Boston[-training.samples, ]
+```
+
+We look at the data:
+
+```{r}
+head(Boston)
+```
+
+We select the predictor variables:
+
+```{r}
+pred <- dplyr::select(Boston, crim:lstat)
+names(pred)
+```
+
+Now, we can compute a correlation matrix:
+
+```{r}
+cor.matrix <- cor(pred)
+cor.matrix
+```
+
+And we can visualize it:
+
+```{r}
+ggcorrplot(cor.matrix)
+```
+
+Just a different visualization:
+
+```{r}
+ggcorrplot(cor.matrix, method = "circle")
+```
+
+We can add labels, but it is still difficult detecting relevant correlations: 
+
+```{r}
+ggcorrplot(cor.matrix, method = "circle", lab=TRUE)
+```
+
+We set a threshold to identify relevant correlations:
+
+```{r}
+p.mat <- (cor.matrix > 0.7)
+p.mat
+```
+
+
+```{r}
+# Argument p.mat
+# Barring the significant coefficients
+ggcorrplot(cor.matrix,
+  hc.order = TRUE, method = "circle",
+  type = "lower", p.mat = p.mat
+)
+```
+
+When faced to multicollinearity, the concerned variables should be removed, since the presence of multicollinearity implies that the information that this variable provides about the response is redundant in the presence of the other variables (James et al. 2014,P. Bruce and Bruce (2017)).
+
+## Variance Inflation Factor
+
+For a given predictor, multicollinearity can also be assessed by computing a score called the variance inflation factor (or **VIF**), which **measures how much the variance of a regression coefficient is inflated due to multicollinearity in the model**.
+
+The smallest possible value of VIF is **one (absence of multicollinearity)**. As a rule of thumb, **a VIF value that exceeds 5 or 10 indicates a problematic amount of collinearity (James et al. 2014)**.
+
+The following regression model include all predictor variables:
+
+```{r}
+# Build the model
+model1 <- lm(medv ~., data = Boston)
+summary(model1)
+```
+
+
+The R function `vif()`, in the `car` package, can be used to detect multicollinearity in a regression model:
+
+```{r}
+vif(model1)
+```
+
+In this case, we can see that the `rad` and `tax` predictors have high VIF values - compare with the results of the correlation analysis above!!
+
+# Exercise
+
+Consider a dataset from air pollution studies. How is sulphur dioxide concentration (`Pollution`) related to other variables in the dataset? Are there any problems of collinearity?
+
+```{r}
+pollution <- read.table("data/sulphur.dioxide.txt", header=TRUE)
+```
+
+In multiple regression, it is always a good idea to use pairs to look at all the correlations:
+
+```{r}
+pairs(pollution,panel=panel.smooth)
+```
+
+Check for relevant correlations and visualize them. Compute the variance inflation factor and update the model accordingly.
