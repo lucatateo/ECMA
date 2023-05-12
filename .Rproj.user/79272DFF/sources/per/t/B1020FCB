@@ -3,7 +3,7 @@
     "path": "~/GitHub/ECMA/19-multicollinearity.Rmd",
     "project_path": "19-multicollinearity.Rmd",
     "type": "r_markdown",
-    "hash": "1607113091",
+    "hash": "1080489694",
     "contents": "",
     "dirty": false,
     "created": 1683533563357.0,
@@ -12,15 +12,15 @@
     "properties": {
         "source_window_id": "",
         "Source": "Source",
-        "cursorPosition": "3,17",
-        "scrollLine": "0"
+        "cursorPosition": "167,0",
+        "scrollLine": "167"
     },
     "folds": "",
-    "lastKnownWriteTime": 1683529581,
+    "lastKnownWriteTime": 1683877371,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1683529581,
+    "last_content_update": 1683877371949,
     "read_only": false,
     "read_only_alternatives": []
 }

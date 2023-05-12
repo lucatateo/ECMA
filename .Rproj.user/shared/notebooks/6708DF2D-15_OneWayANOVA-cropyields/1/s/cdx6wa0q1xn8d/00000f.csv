@@ -1,0 +1,6 @@
+"0","soil.type <- c(rep(""sand"",10),"
+"0","               rep(""clay"",10),"
+"0","               rep(""loam"",10))"
+"0","yields <- c(sand, clay, loam)"
+"0","dati.new <- data.frame(soil.type, yields)"
+"0","dati.new"

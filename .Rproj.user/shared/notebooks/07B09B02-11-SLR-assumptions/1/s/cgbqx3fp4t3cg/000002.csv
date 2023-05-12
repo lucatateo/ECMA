@@ -1,0 +1,10 @@
+"0","```r
+
+shapiro.test(residuals(cars.lm))
+```"
+"1","
+	Shapiro-Wilk normality test
+
+data:  residuals(cars.lm)
+W = 0.94509, p-value = 0.02152
+"

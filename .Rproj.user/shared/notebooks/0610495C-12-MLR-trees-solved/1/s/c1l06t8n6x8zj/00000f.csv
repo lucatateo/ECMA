@@ -1,0 +1,6 @@
+"0","plot_model(mod, type = ""eff"", terms = ""Girth"")"
+"2","Package `effects` is not available, but needed
+  for `ggeffect()`. Either install package
+  `effects`, or use `ggpredict()`. Calling
+  `ggpredict()` now.
+"
