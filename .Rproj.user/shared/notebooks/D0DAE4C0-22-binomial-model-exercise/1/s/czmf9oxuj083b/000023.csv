@@ -1,3 +1,0 @@
-"0",""
-"0","# eliminazione dell'outlier"
-"0","subset(dati.mod, dati.mod$sd.rocce > 200)"

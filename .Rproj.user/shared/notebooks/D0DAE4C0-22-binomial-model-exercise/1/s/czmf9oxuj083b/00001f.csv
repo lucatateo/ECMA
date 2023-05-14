@@ -1,4 +1,0 @@
-"0","dotchart(dati.mod$sd.rocce,"
-"0","         groups = dati.mod$CattSiNo,"
-"0","         ylab = ""CattSiNo"","
-"0","         xlab = ""SD diam"", main = """")"
