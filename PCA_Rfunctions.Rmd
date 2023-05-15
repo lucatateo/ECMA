@@ -1,0 +1,222 @@
+---
+title: "PCA with R"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+## prcomp
+
+```{r prcomp}
+
+res.prcomp <- prcomp(iris[,-5])
+summary(res.prcomp)
+# compare to:
+res.prcomp <- prcomp(iris[,-5], center=TRUE, scale=TRUE)
+summary(res.prcomp)
+plot(res.prcomp)
+biplot(res.prcomp)
+res.prcomp$rotation
+biplot(res.prcomp, choices=3:4)
+
+```
+
+The output contains the following values:
+
+* sdev = deviazioni standard delle componenti principali
+* rotation = la matrice di rotazione con i variable loadings (consente di interpretare i fattori, in base al peso che hanno le variabili nel definirli)
+* x = le coordinate fattoriali dei casi (se retx=TRUE, come di default) (newdata / scores!!)
+* center = il valore corrispondente all’attuale origine dell’asse, per ciascuna variabile (se center=TRUE, come di default)
+* scale = come center, ma per la varianza di ciascuna variabile (se scale=TRUE)
+
+
+## princomp
+
+```{r princomp}
+
+res.princomp <- princomp(iris[,-5])
+summary(res.princomp)
+# compare to:
+res.princomp <- princomp(iris[,-5], cor=TRUE)
+summary(res.princomp)
+
+loadings(res.princomp) # Small loadings are conventionally not printed (replaced by spaces), to draw the eye to the pattern of the larger loadings.
+# A matrix of loadings, one column for each factor. The factors are ordered in decreasing order of sums of squares of loadings, and given the sign that will make the sum of the loadings positive.
+# The signs of the loadings vectors are arbitrary
+# Calling loadings() on your object returns a summary where the SS are always equal to 1, hence the % variance is just the SS loadings divided by the number of variables. It makes sense only when using Factor Analysis - don't look at this table for PCA!!
+
+plot(res.princomp)
+biplot(res.princomp)
+
+```
+
+L’oggetto (output) PCA1 è però diverso. Esso quindi contiene:
+
+* sdev = deviazioni standard delle componenti principali
+* loadings (anziché rotation) = la matrice con i variable loadings
+* scores (anziché x) = le coordinate fattoriali dei casi (può essere omessa, con retx=FALSE)
+* center = il valore corrispondente all’attuale origine dell’asse, per ciascuna variabile (la media)
+* scale = il fattore di scala delle variabili
+See more at: http://www.agnesevardanega.eu/metref/r/analisi_multivariata/analisi_in_componenti_principali#sthash.9eahtvD2.dpuf
+
+```{r varimax, echo=FALSE, eval=FALSE}
+
+varimax(res.princomp$loadings[,1:2])
+# Varimax is so called because it maximizes the sum of the variances of the squared loadings (squared correlations between variables and factors).
+# After an orthogonal rotation (such as varimax), the "rotated-principal" axes are not orthogonal, and orthogonal projections on them do not make sense. So one should rather drop this whole axes/projections point of view. It would be weird to still call it PCA (which is all about projections with maximal variance etc.).
+
+```
+
+
+## FactoMineR
+
+```{r factoextra}
+
+library(FactoMineR)
+library(factoextra)
+
+```
+
+
+```{r pca}
+
+res.pca <- PCA(iris[, -5],  graph = FALSE)
+res.pca
+get_eig(res.pca) # Extract eigenvalues/variances
+sqrt(get_eig(res.pca)[,1]) # compare to summary(res.prcomp)
+
+# Visualize eigenvalues/variances
+fviz_eig(res.pca, addlabels=TRUE, hjust = -0.3)+
+  theme_minimal()
+
+# export all results in csv file
+write.infile(res.pca,file="my_FactoMineR_results.csv")
+
+```
+
+
+### Visualize results for variables
+
+```{r variables-results}
+
+# Extract the results for variables
+var <- get_pca_var(res.pca)
+var
+# Contribution of variables
+var$contrib
+colSums(var$contrib)
+# correlation of variables with the first 4 PC
+res.pca$var$cor[, 1:4]
+# axis characterization
+dimdesc(res.pca)
+
+```
+
+
+```{r plots-variables}
+
+# Graph of variables: default plot
+fviz_pca_var(res.pca, col.var = "steelblue")
+# It’s possible to control variable colors using their contributions to the principal axes:
+# Control variable colors using their contributions
+# Use gradient color
+fviz_pca_var(res.pca, col.var="contrib")+
+scale_color_gradient2(low="white", mid="blue", 
+      high="red", midpoint = 96) +
+theme_minimal()
+
+# Variable contributions on axis 1
+fviz_contrib(res.pca, choice="var", axes = 1 )+
+  labs(title = "Contributions to Dim 1")
+# Variable contributions on axis 2
+fviz_contrib(res.pca, choice="var", axes = 2 )+
+  labs(title = "Contributions to Dim 2")
+
+# Variable contributions on axes 1 + 2
+fviz_contrib(res.pca, choice="var", axes = 1:2)+
+  labs(title = "Contributions to Dim 1+2")
+
+```
+
+
+### Visualize results for individuals
+
+Especially usefull to consider additional variables excluded from PCA, eg categorical ones
+
+```{r individuals}
+
+# Extract the results for individuals
+ind <- get_pca_ind(res.pca)
+ind
+
+# Coordinates of individuals
+head(ind$coord)
+# compare to:
+head(res.prcomp$x)
+
+
+# Graph of individuals
+# 1. Use repel = TRUE to avoid overplotting
+fviz_pca_ind(res.pca, repel = TRUE)+
+  theme_minimal()
+
+# Color by groups: habillage=iris$Species
+# Show points only: geom = "point"
+p <- fviz_pca_ind(res.pca, geom = "point",
+    habillage=iris$Species, addEllipses=TRUE,
+    ellipse.level= 0.95)+ theme_minimal()
+print(p)
+
+# Change group colors manually
+# Read more: http://www.sthda.com/english/wiki/ggplot2-colors
+p + scale_color_manual(values=c("#999999", "#E69F00", "#56B4E9"))+
+ scale_fill_manual(values=c("#999999", "#E69F00", "#56B4E9"))+
+ theme_minimal()
+
+```
+
+
+## Plot of individuals and variables
+
+```{r biplot}
+
+# Biplot of individuals and variables
+# ++++++++++++++++++++++++++
+# Only variables are labelled
+ fviz_pca_biplot(res.pca,  label="var", habillage=iris$Species,
+      addEllipses=TRUE, ellipse.level=0.95) +
+  theme_minimal()
+
+```
+
+
+## A regression analysis on dimensions
+
+```{r regression}
+
+# dim(df.new)
+length(var$coord)
+dim(iris)
+# mod1 <- aov()
+
+res.pca$var$coord
+
+# Transpose eigeinvectors
+eigenvectors.t <- t(res.eig$vectors)
+# Transpose the adjusted data
+df.scaled.t <- t(df.scaled)
+# The new dataset
+df.new <- eigenvectors.t %*% df.scaled.t
+# Transpose new data ad rename columns
+df.new <- t(df.new)
+colnames(df.new) <- c("PC1", "PC2", "PC3", "PC4")
+head(df.new)
+
+round(cor(df.new),2)
+
+```
+
+

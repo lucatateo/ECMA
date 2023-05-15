@@ -1,3 +1,0 @@
-"0",""
-"0","dati.mod <- read.csv(""data/dati.mod.csv"")"
-"0","head(dati.mod)"
