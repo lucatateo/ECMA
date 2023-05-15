@@ -10,14 +10,14 @@ output: html_notebook
 # examine community composition
 
 # # Let's lay some conceptual groundwork
-# # Consider a single axis of abundance representing a single species:
-# plot(0:10,0:10,type="n",axes=F,xlab="Abundance of Species 1",ylab="")
-# axis(1)
-# # We can plot each community on that axis depending on the abundance of 
-# # species 1 within it
-# points(5,0); text(5.5,0.5,labels="community A")
-# points(3,0); text(3.2,0.5,labels="community B")
-# points(0,0); text(0.8,0.5,labels="community C")
+# Consider a single axis of abundance representing a single species:
+plot(0:10,0:10,type="n",axes=F,xlab="Abundance of Species 1",ylab="")
+axis(1)
+# We can plot each community on that axis depending on the abundance of
+# species 1 within it
+points(5,0); text(5.5,0.5,labels="community A")
+points(3,0); text(3.2,0.5,labels="community B")
+points(0,0); text(0.8,0.5,labels="community C")
 # 
 # # Now consider a second axis of abundance representing a different 
 # # species
@@ -58,8 +58,7 @@ d$points3d(0,5,5); text(d$xyz.convert(0,5,5.5),labels="community C")
 # (It is also where the "non-metric" part of the name comes from)
 
 # The NMDS procedure is iterative and takes place over several steps:
-# (1) Define the original positions of communities in multidimensional
-# space
+# (1) Define the original positions of communities in multidimensional space
 # (2) Specify the number m of reduced dimensions (typically 2)
 # (3) Construct an initial configuration of the samples in 2-dimensions
 # (4) Regress distances in this initial configuration against the observed
@@ -75,9 +74,7 @@ d$points3d(0,5,5); text(d$xyz.convert(0,5,5.5),labels="community C")
 #direction of decreasing stress, and repeat until stress is below
 #some threshold
 
-# Generally, stress < 0.05 provides an excellent represention in reduced 
-# dimensions, < 0.1 is great, < 0.2 is good, and stress > 0.3 provides a 
-# poor representation
+# Generally, stress < 0.05 provides an excellent represention in reduced dimensions, < 0.1 is great, < 0.2 is good, and stress > 0.3 provides a poor representation
 
 # NOTE: The final configuration may differ depending on the initial 
 # configuration (which is often random) and the number of iterations, so
@@ -87,7 +84,7 @@ d$points3d(0,5,5); text(d$xyz.convert(0,5,5.5),labels="community C")
 # To begin, NMDS requires a distance matrix, or a matrix of 
 # dissimilarities
 # Raw Euclidean distances are not ideal for this purpose: they are 
-# sensitive to totalabundances, so may treat sites with a similar number
+# sensitive to total abundances, so may treat sites with a similar number
 # of species as more similar, even though the identities of the species
 # are different
 # They are also sensitive to species absences, so may treat sites with
@@ -210,6 +207,12 @@ for(i in unique(treat)) {
 orditorp(example_NMDS,display="species",col="red",air=0.01)
 orditorp(example_NMDS,display="sites",col=c(rep("green",5),rep("blue",5)),
          air=0.01,cex=1.25)
+
+for(i in unique(treat)) {
+  ordiellipse(example_NMDS$point[grep(i,treat),],   groups=treat[treat==i], col=colors[grep(i,treat)],label=F, display="sites", kind = c("sd","se", "ehull"),
+         conf, draw = c("lines","polygon"))}
+
+
 ```
 
 

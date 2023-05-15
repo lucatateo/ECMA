@@ -125,7 +125,7 @@ fviz_pca_var(res.pca, col.var = "steelblue")
 # Use gradient color
 fviz_pca_var(res.pca, col.var="contrib")+
 scale_color_gradient2(low="white", mid="blue", 
-      high="red", midpoint = 96) +
+      high="red", midpoint = 25) +
 theme_minimal()
 
 # Variable contributions on axis 1
