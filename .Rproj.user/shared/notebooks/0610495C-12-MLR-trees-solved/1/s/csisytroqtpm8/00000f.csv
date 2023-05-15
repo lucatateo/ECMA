@@ -1,7 +1,0 @@
-"0","# load the data"
-"0","data(trees) # this is a dataframe"
-"0","class(trees)"
-"1","[1]"
-"1"," ""data.frame"""
-"1","
-"

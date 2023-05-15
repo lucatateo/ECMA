@@ -1,3 +1,0 @@
-"0",""
-"0","mod <- lm(Volume ~ Girth + Height, data=trees)"
-"0","plot(mod)"

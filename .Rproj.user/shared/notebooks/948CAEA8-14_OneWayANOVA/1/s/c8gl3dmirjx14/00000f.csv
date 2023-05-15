@@ -1,3 +1,0 @@
-"0","data(PlantGrowth)"
-"0","plant.df = PlantGrowth"
-"0","plant.df$group = factor(plant.df$group, labels = c(""Control"", ""Treatment 1"", ""Treatment 2""))"

@@ -1,7 +1,0 @@
-"0","scores.graderA = c(4,3,4,5,2,3,4,5)"
-"0","scores.graderB = c(4,4,5,5,4,5,4,4)"
-"0","scores.graderC = c(3,4,2,4,5,5,4,4)"
-"0","scores <- c(scores.graderA,scores.graderB,scores.graderC)"
-"0","graders <- c(rep(""A"",8), rep(""B"",8), rep(""C"",8))"
-"0","scores.graders <- data.frame(graders,scores)"
-"0","boxplot(scores ~ graders, data=scores.graders)"

@@ -1,8 +1,0 @@
-"0","# Load the data"
-"0","data(""Boston"", package = ""MASS"")"
-"0","# Split the data into training and test set"
-"0","# set.seed(123)"
-"0","# training.samples <- Boston$medv %>%"
-"0","#   createDataPartition(p = 0.8, list = FALSE)"
-"0","# train.data  <- Boston[training.samples, ]"
-"0","# test.data <- Boston[-training.samples, ]"
