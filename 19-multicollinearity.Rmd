@@ -89,7 +89,7 @@ ggcorrplot(cor.matrix, method = "circle", lab=TRUE)
 We set a threshold to identify relevant correlations:
 
 ```{r}
-p.mat <- (cor.matrix > 0.7)
+p.mat <- (abs(cor.matrix) > 0.7)
 p.mat
 ```
 
@@ -115,7 +115,7 @@ The following regression model include all predictor variables:
 
 ```{r}
 # Build the model
-model1 <- lm(medv ~., data = Boston)
+model1 <- lm(medv ~ ., data = Boston)
 summary(model1)
 ```
 
@@ -143,3 +143,26 @@ pairs(pollution,panel=panel.smooth)
 ```
 
 Check for relevant correlations and visualize them. Compute the variance inflation factor and update the model accordingly.
+
+```{r}
+cor.matrix <- cor(pollution)
+# cor.matrix
+p.mat <- (abs(cor.matrix) > 0.7)
+# p.mat
+ggcorrplot(cor.matrix,
+  hc.order = TRUE, method = "circle",
+  type = "lower", p.mat = p.mat
+)
+```
+
+```{r}
+# Build the model
+model1 <- lm(Pollution ~ ., data = pollution)
+summary(model1)
+```
+```{r}
+vif(model1)
+model1 <- lm(Pollution ~ Temp + Industry + Wind + Rain + Wet.days, data = pollution)
+summary(model1)
+```
+

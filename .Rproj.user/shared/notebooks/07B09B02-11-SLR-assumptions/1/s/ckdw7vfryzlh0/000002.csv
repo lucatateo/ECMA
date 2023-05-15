@@ -1,0 +1,23 @@
+"0","```r
+
+# install.packages(\"lmtest\")
+library(lmtest)
+```"
+"1","Loading required package: zoo
+
+Attaching package: 'zoo'
+
+The following objects are masked from 'package:base':
+
+    as.Date, as.Date.numeric
+"
+"0","```r
+dwtest(cars.lm, alternative = \"two.sided\")
+```"
+"1","
+	Durbin-Watson test
+
+data:  cars.lm
+DW = 1.6762, p-value = 0.1904
+alternative hypothesis: true autocorrelation is not 0
+"
