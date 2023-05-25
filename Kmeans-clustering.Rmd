@@ -1,0 +1,128 @@
+---
+title: "K-means clustering - step by step"
+output: 
+  html_document: 
+    toc: yes
+    toc_float:
+      toc_collapsed: yes
+    number_sections: yes
+    theme: paper
+    df_print: kable
+---
+
+
+# Preliminary steps
+
+Load required packages:
+
+```{r packages, message=FALSE, warning=FALSE}
+library(tidyverse)  # data manipulation
+library(cluster)    # clustering algorithms
+library(factoextra) # clustering algorithms & visualization
+library(FactoMineR)
+library(readxl)
+library(readr)
+```
+
+and data (rows are individual, columns are variables):
+
+```{r load-data, message=FALSE, warning=FALSE}
+# # df <- USArrests[,1:2]
+# df_birds <- read_xlsx("data/short.xlsx", col_types = c("text","numeric","numeric"))
+# df <- na.omit(df_birds)
+# df <- scale(df[,2:3])
+# head(df)
+
+european_birds <- read_delim("data/european_birds.txt", 
+    delim = "\t", escape_double = FALSE, 
+    trim_ws = TRUE)
+european_birds %>% 
+  dplyr::select(Species,
+                LengthU_MEAN,
+                # WingU_MEAN,
+                Clutch_MEAN,
+                `Life span`) -> df_birds
+df_birds <- na.omit(df_birds)
+df <- scale(df_birds[,2:dim(df_birds)[2]])
+head(df)
+
+```
+
+
+Visualize the dissimilarities:
+
+```{r dissimilarities-plot}
+distance <- get_dist(df)
+fviz_dist(distance, gradient = list(low = "#00AFBB", mid = "white", high = "#FC4E07"))
+```
+
+
+# Define the number of clusters
+
+with the Elbow method
+
+```{r cl-def-elbow}
+fviz_nbclust(df, kmeans, method = "wss")
+```
+
+or the Average silhouette method
+
+```{r cl-def-sil}
+fviz_nbclust(df, kmeans, method = "silhouette")
+```
+
+
+or the Gap statistics
+
+```{r cl-def-gap}
+gap_stat <- clusGap(df, FUN = kmeans, nstart = 25,
+                    K.max = 10, B = 50)
+fviz_gap_stat(gap_stat)
+```
+
+
+# Compute k-means clusering
+
+using the chosen number of clusters
+
+```{r clustering}
+# Compute k-means clustering with k = 4
+set.seed(123)
+final <- kmeans(df, 3, nstart = 25)
+print(final)
+```
+
+```{r cl-viz}
+fviz_cluster(final, data = df,
+             geom = c("point"),
+             ellipse.type = "euclid")
+```
+
+
+```{r cl-list, include=FALSE}
+final$cluster
+```
+
+Each species is associated to a cluster, and the results are saved to csv and xlsx files:
+
+```{r results}
+df_birds %>% 
+  mutate(cluster_id = final$cluster) -> df_birds_cluster
+write.csv(df_birds_cluster, file = "output/df_birds_cluster.csv")
+writexl::write_xlsx(df_birds_cluster, "output/df_birds_cluster.xlsx")
+head(df_birds_cluster)
+```
+
+This is a summary of the average features for each cluster:
+
+```{r}
+df_birds_cluster %>% 
+  group_by(cluster_id) %>% 
+  summarise(meanLength = mean(LengthU_MEAN),
+            # meanWing = mean(WingU_MEAN),
+            meanLifeSpan = mean(`Life span`),
+            meanClutch = mean(Clutch_MEAN))
+```
+
+
+
