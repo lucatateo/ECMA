@@ -40,7 +40,7 @@ class(mydata$weight_g) # why?
 # let's see how it works
 ??histogram
 ?hist # this is the simplest way to get help in R! just a question mark!
-hist(y$weight_g, main="", xlab="Animal weigth (g)") # with default break
+hist(y$weight_g, main="", xlab="Animal weight (g)") # with default break
 hist(y$weight_g, breaks=30, main="", xlab="Animal weigth (g)") # we specified a single number giving
 # the number of cells for the histogram
 
@@ -58,7 +58,7 @@ boxplot(y$weight_g ~ y$sex + y$age, ylab="Animal weigth (g)")
 # exercise (by your own): do the same with the foot lenght
 boxplot(y$footlength_mm, ylab="Foot length (mm)")
 
-
+# RIPRENDERE DA QUI IL 5 APRILE 
 ## ---- Central tendency measures ----
 
 ## the mean and the median
