@@ -63,6 +63,7 @@ boxplot(y$footlength_mm, ylab="Foot length (mm)")
 
 ## the mean and the median
 weight <- na.omit(y$weight_g)
+weight
 # mean
 mean(weight)
 mean(y$weight_g)
@@ -106,7 +107,7 @@ var(weight)
 
 ## standard deviation
 sd(weight)
-
+#ignora fino a 145
 # why we square the differences?
 m <- mean(weight)
 w <- c(m+4,m+4,m-4,m-4)
@@ -150,7 +151,7 @@ sd(weight)/sqrt(119)
 ## ---- Outliers ----
 
 # boxplot
-op <- par(mfrow=c(1,2))
+op <- par(mfrow=c(1,2)) #due grafici visualizzati
 boxplot(y$footlength_mm, col = "lightgray", ylim=c(10,30))
 # boxplot(log(y$footlength_mm), col = "lightgray")
 mtext("80", line=-1)
@@ -166,6 +167,7 @@ par(mfrow=c(1,1))
 # identify the outlier
 plot(x=y$footlength_mm, y=y$capture_id)
 identify(x=y$footlength_mm, y=y$capture_id)
+
 # press Esc to stop the identify stuff
 y[102,]
 
@@ -185,18 +187,19 @@ y[c("29","45"),] # by row name, more than a row
 y[,1] # one column (the first one)
 y[,1:10] # first ten columns
 y[,5:10] # from 5th to 10th column
-y[,"chip"] # by column name
-y[,c("chip","trap_id")] # by column name, more than a column
-
+y[,"chip"] # by column name (tendenzialmente colonna piu utile)
+y[,c("chip","trap_id")] # by column name, more than a column (c= concateno)
+y[9,c("chip","trap_id")]
 # selecting subsets of data, according to their values
-library(dplyr)
+library(dplyr)#ci aiuta a manipolare i dati: filtrare (selezionare sulla base delle righe )
 library(tidyverse)
 filter(y, trap_id > 43)
 # or
-y %>% filter(trap_id > 43)
+y %>% filter(trap_id > 43) #pipe ctrl shift n
 filter(y, trap_id > 43 & occasion < 20)
 filter(y, trap_id < 5 | trap_id > 65)
 arrange(y, trap_id)
+#ordina in base al valore di una variabile
 
 # multiple operations
 y[,c("chip","trap_id")] %>% filter(trap_id > 65) %>% arrange(trap_id)
@@ -212,3 +215,5 @@ y$age
 y %>% group_by(age) %>% summarise(mean.w = mean(na.omit(weight_g)))
 y$sex
 y %>% group_by(age, sex) %>% summarise(mean.w = mean(na.omit(weight_g)))
+y <-read.csv("data/captures.csv", sep=";")
+
