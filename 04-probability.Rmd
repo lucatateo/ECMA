@@ -238,7 +238,7 @@ joint.df <-
   mutate(prop = n/sum(n))
 joint.df
 ```
-
+(probabilità congiunta dei due eventi diviso la marginale del secondo)
 What is the probability of capturing a female, given that it is an adult? (conditional)  
 
 ```{r}
